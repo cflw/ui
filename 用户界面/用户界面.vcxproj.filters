@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="用户界面">
+      <UniqueIdentifier>{2b0bef0e-57ea-4350-9043-02b9073f2e1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="接口实现">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="用户界面.cpp">
+      <Filter>用户界面</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_控件.cpp">
+      <Filter>用户界面</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_基础.cpp">
+      <Filter>用户界面</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_引擎.cpp">
+      <Filter>用户界面</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_布局.cpp">
+      <Filter>用户界面</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面接口实现_画界面.cpp">
+      <Filter>接口实现</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面接口实现_输入w.cpp">
+      <Filter>接口实现</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面接口实现_输入x.cpp">
+      <Filter>接口实现</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_按键切换.cpp">
+      <Filter>用户界面</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="用户界面.h">
+      <Filter>用户界面</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面_控件.h">
+      <Filter>用户界面</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面_基础.h">
+      <Filter>用户界面</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面_头.h">
+      <Filter>用户界面</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面_引擎.h">
+      <Filter>用户界面</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面_布局.h">
+      <Filter>用户界面</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面_接口.h">
+      <Filter>用户界面</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面接口实现_画界面.h">
+      <Filter>接口实现</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面接口实现_输入w.h">
+      <Filter>接口实现</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面接口实现_输入x.h">
+      <Filter>接口实现</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面_按键切换.h">
+      <Filter>用户界面</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
