@@ -7,14 +7,14 @@ namespace 用户界面 {
 // 主题
 //==============================================================================
 const S主题 S主题::c白(t颜色(1, 1, 1, 1), t颜色(1, 1, 1, 1));
-S主题::S主题(const t颜色 &p前景色, const t颜色 &p背景色):
-	m前景色(p前景色),
-	m背景色(p背景色) {
+S主题::S主题(const t颜色 &a前景色, const t颜色 &a背景色):
+	m前景色(a前景色),
+	m背景色(a背景色) {
 }
-t颜色 S主题::fg颜色(float p插值, float p亮度, float p透明度) const {
-	t颜色 v = 数学::f插值<t颜色>(m背景色, m前景色, p插值);
-	v = v.f颜色分量乘(p亮度);
-	v.a *= p透明度;
+t颜色 S主题::fg颜色(float a插值, float a亮度, float a透明度) const {
+	t颜色 v = 数学::f插值<t颜色>(m背景色, m前景色, a插值);
+	v = v.f颜色分量乘(a亮度);
+	v.a *= a透明度;
 	return v;
 }
 //==============================================================================
@@ -47,8 +47,36 @@ bool C切换动画::fi出现中() const {
 bool C切换动画::fi消失中() const {
 	return m实际 > 0;
 }
+float C切换动画::fg目标() const {
+	return m目标;
+}
+float C切换动画::fg实际() const {
+	return m实际;
+}
 float C切换动画::fg透明度() const {
 	return 1 - abs(m实际);
+}
+void C总切换::f更新(W窗口 &a窗口) {
+	m最小目标 = m最大目标 = a窗口.m切换.m目标;
+	m最小实际 = m最大实际 = a窗口.m切换.m实际;
+	const W窗口 *v父 = a窗口.m父窗口;
+	while (v父) {
+		const auto &v切换 = v父->m切换;
+		m最小目标 = std::min(m最小目标, v切换.m目标);
+		m最大目标 = std::max(m最大目标, v切换.m目标);
+		m最小实际 = std::min(m最小实际, v切换.m实际);
+		m最大实际 = std::max(m最大实际, v切换.m实际);
+		v父 = v父->m父窗口;
+	}
+}
+float C总切换::fg目标() const {
+	return m最大目标;
+}
+float C总切换::fg实际() const {
+	return m最大实际;
+}
+float C总切换::fg透明度() const {
+	return 1 - std::max(std::abs(m最小实际), std::abs(m最大实际));
 }
 //==============================================================================
 // 参数
@@ -94,16 +122,16 @@ t向量2 C动画计算::f坐标_无(const W窗口 &a窗口) {
 }
 t向量2 C动画计算::f坐标_从右到左(const W窗口 &a窗口) {
 	t向量2 v = f坐标_无(a窗口);
-	v.x += a窗口.m切换.m实际 * -60;
+	v.x += a窗口.fg总切换().fg实际() * -60;
 	return v;
 }
 t向量2 C动画计算::f坐标_下拉(const W窗口 &a窗口) {
 	t向量2 v = f坐标_无(a窗口);
-	v.y += abs(a窗口.m切换.m实际) * 30;
+	v.y += abs(a窗口.fg总切换().fg实际()) * 30;
 	return v;
 }
 t向量2 C动画计算::f坐标_缩放(const W窗口 &a窗口) {
-	const float v倍数 = 1 - abs(a窗口.m切换.m实际);
+	const float v倍数 = 1 - abs(a窗口.fg总切换().fg实际());
 	t向量2 v = a窗口.m坐标 * v倍数;
 	v += f坐标_无(*a窗口.m父窗口);
 	return v;
@@ -113,7 +141,7 @@ t向量2 C动画计算::f尺寸_无(const W窗口 &a窗口) {
 	return a窗口.m尺寸;
 }
 t向量2 C动画计算::f尺寸_缩放(const W窗口 &a窗口) {
-	const float v倍数 = 1 - abs(a窗口.m切换.m实际);
+	const float v倍数 = 1 - abs(a窗口.fg总切换().fg实际());
 	return a窗口.m尺寸 * v倍数;
 }
 //==============================================================================
@@ -135,9 +163,11 @@ float S渐变插值::f插值(float a小, float a大) const {
 //==============================================================================
 W窗口::W窗口() {
 	f标志_s默认();
+	f标志_s继承显示();
 }
 W窗口::W窗口(int a标识, int a值) : m标识(a标识), m值(a值) {
 	f标志_s默认();
+	f标志_s继承显示();
 }
 W窗口::~W窗口() {
 	if (m按键切换) {
@@ -164,6 +194,13 @@ void W窗口::f事件_窗口值变化(W窗口&, const int &, int &) {
 }
 void W窗口::f事件_窗口移动(W窗口&, const t向量2 &) {
 }
+void W窗口::f事件_焦点变化(W窗口 &a窗口) {
+	if (a窗口.fi焦点()) {
+		m焦点窗口 = &a窗口;
+	} else {
+		m焦点窗口 = nullptr;
+	}
+}
 //响应
 void W窗口::f响应_初始化() {
 }
@@ -175,7 +212,7 @@ void W窗口::f响应_更新() {
 	m焦点渐变.f渐变(fi焦点());
 }
 void W窗口::f响应_显示(const S显示参数 &a) const {
-	if constexpr (c调试) {
+	if constexpr (c调试) {	//如果调试模式显示圆形,检查焦点是否正确,且重写显示
 		const t颜色 v颜色 = a.m主题.fg颜色(1, 1, m焦点渐变.f插值(0, 1));
 		a.m画界面.f绘制圆形(fg动画矩形(), v颜色);
 	}
@@ -215,6 +252,23 @@ void W窗口::f响应_方向键(const S方向键参数 &a方向键) {
 		m父窗口->f响应_方向键(a方向键);
 	}
 }
+void W窗口::f响应_焦点变化() {
+	if (m父窗口) {
+		m父窗口->f事件_焦点变化(*this);
+	}
+}
+void W窗口::f计算_切换() {
+	const float v计算秒 = fg引擎().fg计算秒();
+	m切换.f计算(!m标志[e使用] || m标志[e消失], v计算秒);
+}
+void W窗口::f计算_显示() {
+	if (m标志[e消失] && m切换.fg实际() >= 1) {
+		m标志[e显示] = false;
+	}
+}
+void W窗口::f更新_切换() {
+	m总切换.f更新(*this);
+}
 //动作
 void W窗口::f动作_添加窗口(W窗口 &a窗口) {
 	C用户界面 *v用户界面 = C用户界面::g这;
@@ -232,24 +286,35 @@ void W窗口::f动作_关闭() {
 	});
 	m标志[e使用] = false;
 }
-void W窗口::f动作_禁用(bool p) {
-	m标志[e禁用] = p;
+void W窗口::f动作_禁用(bool a禁用) {
+	m标志[e禁用] = a禁用;
 }
 void W窗口::f动作_显示(float a延时) {
-	if (m标志[e显示] == false) {
+	if (m标志[e显示] == false || m标志[e消失]) {
 		m标志[e显示] = true;
+		m标志[e消失] = false;
 		m切换.f重置(a延时);
 	}
 }
-void W窗口::f动作_隐藏() {
-	m标志[e显示] = false;
+void W窗口::f动作_隐藏(bool a消失) {
+	if (!m标志[e使用]) {	//未使用时直接不显示
+		m标志[e显示] = false;
+	} else if (a消失) {
+		m标志[e消失] = true;
+	} else {
+		m标志[e消失] = true;
+		m标志[e显示] = false;
+	}
 }
 void W窗口::f动作_获得焦点() {
 	C用户界面 &v用户界面 = fg引擎();
 	v用户界面.f设置焦点窗口(*this);
 }
+void W窗口::f动作_获得弱焦点() {
+	fg引擎().f设置弱按键焦点窗口(*this);
+}
 //方法
-C用户界面 &W窗口::fg引擎() const {
+C用户界面 &W窗口::fg引擎() {
 	return *C用户界面::g这;
 }
 void W窗口::f属性_s布局(const t向量2 &a坐标, const t向量2 &a尺寸) {
@@ -259,6 +324,9 @@ void W窗口::f属性_s布局(const t向量2 &a坐标, const t向量2 &a尺寸) {
 }
 void W窗口::f属性_s布局(const S布局参数 &a) {
 	this->f属性_s布局(a.m坐标, a.m尺寸);
+}
+void W窗口::f属性_s布局(float a左, float a上, float a右, float a下) {
+	f属性_s布局(t向量2::fc矩形中心(a左, a上, a右, a下), t向量2::fc矩形尺寸(a左, a上, a右, a下));
 }
 t向量2 W窗口::f属性_g坐标() const {
 	return C动画计算::f坐标_无(*this);
@@ -271,6 +339,9 @@ t向量2 W窗口::fg动画尺寸(const t向量2 &a尺寸偏移) const {
 }
 t矩形 W窗口::fg动画矩形(const t向量2 &a坐标偏移, const t向量2 &a尺寸偏移) const {
 	return t矩形::fc坐标尺寸(fg动画坐标(a坐标偏移), fg动画尺寸(a尺寸偏移));
+}
+const C总切换 &W窗口::fg总切换() const {
+	return m总切换;
 }
 void W窗口::fs按键切换(E按键切换 a) {
 	if (m按键切换) {
@@ -289,13 +360,16 @@ void W窗口::fs按键切换(E按键切换 a) {
 //t颜色 C窗口::fg主题颜色(float p插值, float p亮度, float p透明度) {
 //	return S主题::c白.fg颜色(p插值, p亮度, p透明度);
 //}
-bool W窗口::fi焦点() {
+bool W窗口::fi焦点() const {
 	return m标志[e焦点];
 }
-bool W窗口::fi活动() {
+bool W窗口::fi弱焦点() const {
+	return this == fg引擎().m按键焦点;
+}
+bool W窗口::fi活动() const {
 	C用户界面 &v用户界面 = fg引擎();
-	W窗口 *const v活动窗口 = v用户界面.m活动窗口;
-	W窗口 *v窗口 = this;
+	const W窗口 *const v活动窗口 = v用户界面.m活动窗口;
+	const W窗口 *v窗口 = this;
 	while (v窗口) {
 		if (v活动窗口 == v窗口) {
 			return true;
@@ -304,21 +378,22 @@ bool W窗口::fi活动() {
 	}
 	return false;
 }
-bool W窗口::fi活动窗口() {
+bool W窗口::fi活动窗口() const {
 	C用户界面 &v用户界面 = fg引擎();
 	return v用户界面.m活动窗口 == this;
 }
-bool W窗口::fi按下() {
+bool W窗口::fi按下() const {
 	return (m标志[e鼠标按下] && m标志[e鼠标范围]) || m标志[e按键按下];
 }
 bool W窗口::fi可获得按键焦点() const {
-	return m标志[W窗口::e使用] && !m标志[W窗口::e禁用] && !m标志[W窗口::e鼠标];
+	return m标志[W窗口::e使用] && !m标志[W窗口::e禁用] && !m标志[W窗口::e纯鼠标];
 }
 std::vector<W窗口*> W窗口::fg子窗口() {
 	return ma子窗口;
 }
 void W窗口::f标志_s默认() {
 	m标志[e禁用] = true;
+	m标志[e显示] = true;
 	m标志[e显示背景] = true;
 	m标志[e显示边框] = true;
 }

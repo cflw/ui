@@ -57,20 +57,28 @@ struct S主题 {
 };
 class C切换动画 {
 public:
-	float m目标 = 0;
-	float m实际 = 0;	//-1→0出现,0→1消失
 	void f重置(float 延时 = 0);
 	void f计算(bool 结束, float 间隔);
 	bool fi已消失() const;
 	bool fi出现中() const;
 	bool fi消失中() const;
+	float fg目标() const;
+	float fg实际() const;
 	float fg透明度() const;
+	float m目标 = 0;
+	float m实际 = -1;	//-1→0出现,0→1消失
+};
+class C总切换 {
+public:
+	void f更新(W窗口&);
+	float fg目标() const;
+	float fg实际() const;
+	float fg透明度() const;
+	float m最小目标, m最大目标, m最小实际, m最大实际;
 };
 class C动画计算 {
 public:
 	typedef std::function<t向量2(const W窗口 &)> tf动画;
-	tf动画 mf坐标 = nullptr;
-	tf动画 mf尺寸 = nullptr;
 	void f默认();
 	//坐标
 	static t向量2 f坐标_无(const W窗口 &);
@@ -80,6 +88,9 @@ public:
 	//范围
 	static t向量2 f尺寸_无(const W窗口 &);
 	static t向量2 f尺寸_缩放(const W窗口 &);
+public:
+	tf动画 mf坐标 = nullptr;
+	tf动画 mf尺寸 = nullptr;
 };
 struct S渐变插值 {
 	static constexpr float c速度 = 5;
@@ -129,12 +140,13 @@ public:
 		e鼠标按下,	//鼠标在窗口范围内按下,在响应中处理
 		e按键按下,
 		e选中,	//单选框/复选框的选中
-		e鼠标,	//只能响应鼠标操作的窗口
+		e纯鼠标,	//只能获得鼠标焦点,响应鼠标操作
 		e鼠标范围,	//鼠标在窗口的范围内
-		e显示,
+		e显示,	//如果为假,自已和子窗口都不显示
 		e显示背景,
 		e显示边框,
-		e容器,	//不会收到一些响应。如果有子窗口，默认为true
+		e容器,	//影响窗口的一些默认行为,目前没什么用. 如果有子窗口,默认为true
+		e消失,	//消失动画,消失之后是不显示
 		e自定义
 	};
 	//构造/析构
@@ -150,6 +162,7 @@ public:
 	virtual void f事件_鼠标移上(W窗口&);	//鼠标在窗口上时
 	virtual void f事件_窗口值变化(W窗口&, const int &变化前, int &变化后);
 	virtual void f事件_窗口移动(W窗口&, const t向量2 &);
+	virtual void f事件_焦点变化(W窗口&);
 	//响应,由用户界面给窗口发消息
 	virtual void f响应_初始化();
 	virtual void f响应_销毁();
@@ -158,32 +171,41 @@ public:
 	virtual void f响应_显示(const S显示参数 &) const;
 	virtual void f响应_按键(const S按键参数 &);	//键盘和手柄的按键
 	virtual bool f响应_i范围内(const t向量2 &);	//对鼠标和触摸的坐标进行计算,确定是否在范围内
-	virtual void f响应_鼠标按下(const S按键参数 &);	//在范围内按下触发,触摸点击也调用这个
-	virtual void f响应_鼠标松开(const S按键参数 &);	//在范围内外单击都会触发,前提是先调用按下,触摸点击也调用这个
+	virtual void f响应_鼠标按下(const S按键参数 &);	//在鼠标焦点范围内按下触发,触摸点击也调用这个
+	virtual void f响应_鼠标松开(const S按键参数 &);	//在鼠标焦点范围内外单击都会触发,前提是先调用按下,触摸点击也调用这个
 	virtual void f响应_字符(const std::vector<wchar_t> &);
 	virtual void f响应_方向键(const S方向键参数 &);	//如果不处理，丢给父窗口处理
+	virtual void f响应_焦点变化();	//获得焦点或失去焦点时调用,在函数内调用 fi焦点 以检查自身是否有焦点,切换焦点时先响应失去焦点的窗口在响应获得焦点的窗口
+	//引擎内调用的计算&更新
+	void f计算_切换();
+	void f计算_显示();
+	void f更新_切换();
 	//动作,由父窗口给子窗口发消息
 	void f动作_添加窗口(W窗口&);	//类的成员子窗口
 	void f动作_关闭();	//如果要切换窗口,先关闭窗口再新建窗口
 	void f动作_禁用(bool = true);
 	void f动作_显示(float 延时 = 0);
-	void f动作_隐藏();
+	void f动作_隐藏(bool 消失动画 = true);
 	void f动作_获得焦点();
+	void f动作_获得弱焦点();
 	//其它方法
-	C用户界面 &fg引擎() const;
+	static C用户界面 &fg引擎();
 	std::vector<W窗口*> fg子窗口();
 	virtual void f属性_s布局(const t向量2 &坐标 = {}, const t向量2 &尺寸 = {});
+	void f属性_s布局(float 左, float 上, float 右, float 下);
 	void f属性_s布局(const S布局参数 &);
 	t向量2 f属性_g坐标() const;
 	t向量2 fg动画坐标(const t向量2 &偏移 = t向量2::c零) const;
 	t向量2 fg动画尺寸(const t向量2 &偏移 = t向量2::c零) const;
 	t矩形 fg动画矩形(const t向量2 &坐标偏移 = t向量2::c零, const t向量2 &范围偏移 = t向量2::c零) const;
+	const C总切换 &fg总切换() const;	//结合父窗口,计算出总的切换
 	void fs按键切换(E按键切换);
 	//t颜色 fg主题颜色(float, float, float);
-	bool fi焦点();	//窗口是否获得焦点
-	bool fi活动();	//如果父窗口是活动的，子窗口也是活动的。
-	bool fi活动窗口();
-	bool fi按下();
+	bool fi焦点() const;	//窗口是否获得焦点
+	bool fi弱焦点() const;
+	bool fi活动() const;	//如果父窗口是活动的，子窗口也是活动的。
+	bool fi活动窗口() const;
+	bool fi按下() const;
 	bool fi可获得按键焦点() const;
 	void f标志_s默认();
 	bool f标志_g继承(size_t) const;
@@ -197,13 +219,14 @@ public:	//管理需要，由"C用户界面"控制
 	int m序号 = -1;	//在窗口表的序号
 	int m窗口层 = 0;
 	std::vector<W窗口*> ma子窗口;
-	W窗口 *m焦点窗口;	//指子窗口
+	W窗口 *m焦点窗口 = nullptr;	//指子窗口
 	E按键 m鼠标按键 = E按键::e无;
 	I按键切换 *m按键切换 = nullptr;
 public:	//可变
 	t向量2 m坐标 = t向量2::c零;
 	t向量2 m尺寸 = t向量2(8, 8);
 	C切换动画 m切换;
+	C总切换 m总切换;
 	C动画计算 m动画;
 	S渐变插值 m焦点渐变;
 	int m标识;

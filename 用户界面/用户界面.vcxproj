@@ -22,7 +22,7 @@
     <ProjectGuid>{B241C66B-8A81-4160-BE52-A3FDAAC8E6AF}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>用户界面</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -77,6 +77,7 @@
     <IncludePath>$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(cflw_compile)\$(ProjectName)\$(Platform)_$(Configuration)\</OutDir>
+    <IntDir>$(OutDir)</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -88,6 +89,7 @@
     <IncludePath>$(IncludePath)</IncludePath>
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(cflw_compile)\$(ProjectName)\$(Platform)_$(Configuration)\</OutDir>
+    <IntDir>$(OutDir)</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -192,6 +194,7 @@
     <ClCompile Include="用户界面_基础.cpp" />
     <ClCompile Include="用户界面_引擎.cpp" />
     <ClCompile Include="用户界面_控件.cpp" />
+    <ClCompile Include="用户界面_控件_表格.cpp" />
     <ClCompile Include="用户界面接口实现_画界面.cpp" />
     <ClCompile Include="用户界面接口实现_输入w.cpp" />
     <ClCompile Include="用户界面接口实现_输入x.cpp" />

@@ -41,6 +41,9 @@
     <ClCompile Include="用户界面_按键切换.cpp">
       <Filter>用户界面</Filter>
     </ClCompile>
+    <ClCompile Include="用户界面_控件_表格.cpp">
+      <Filter>用户界面</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="用户界面.h">
