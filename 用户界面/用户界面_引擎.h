@@ -49,6 +49,8 @@ public:
 	void f设置弱按键焦点窗口(W窗口 &);	//不会改变鼠标焦点
 	void f设置活动窗口(W窗口 &);	//要切换窗口、进入子窗口，调用这个
 	void f清除活动窗口();
+	void f设置平移焦点窗口(W窗口 &);
+	void f清除平移焦点窗口();
 	void f窗口表排序();	//处理刚新建的窗口和要删除的窗口
 	float fg计算秒() const;
 	float fg渲染秒() const;
@@ -62,6 +64,7 @@ public:
 	W窗口 *m处理窗口 = nullptr;
 	W窗口 *m按键焦点 = nullptr;
 	W窗口 *m鼠标焦点 = nullptr;
+	W窗口 *m平移焦点 = nullptr;
 	W窗口 *m活动窗口 = nullptr;
 	float m计算秒 = c帧秒, m渲染秒 = c帧秒;
 	S方向键变量 m键盘方向键变量, m手柄方向键变量;
@@ -77,4 +80,4 @@ public:
 	bool m触摸按下 = false;
 	int m总编号 = 0;
 };
-}
+}	//namespace 用户界面

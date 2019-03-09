@@ -28,5 +28,8 @@
     <ClInclude Include="头.h">
       <Filter>程序</Filter>
     </ClInclude>
+    <ClInclude Include="常量.h">
+      <Filter>程序</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -111,6 +111,19 @@ public:
 	t向量2 m鼠标坐标;
 	t向量2 m被动坐标;	//被其它窗口改变的坐标,有平滑移动
 };
+//滑动块2,响应平移消息
+class W滑动块2 : public W按钮 {
+public:
+	W滑动块2(int = -1, int = 0);
+	void f响应_初始化() override;
+	void f响应_计算() override;
+	bool f响应_i范围内(const t向量2 &) override;
+	void f响应_垂直平移(const S平移参数 &) override;
+	void f响应_水平平移(const S平移参数 &) override;
+	void f属性_s布局(const t向量2 &, const t向量2 &) override;
+	void f响应平移(const S平移参数 &, float (t向量2::*));
+	t向量2 m被动坐标;
+};
 //复选框
 class W复选框 : public W按钮 {
 public:
@@ -161,7 +174,10 @@ public:
 	int f属性_g滑块位置() const;	//动画位置,[0, 最大位置)
 	void f属性_使用中间(bool);	//是否使用空白和滑块
 	void f属性_使用全部(bool);	//是否使用全部
-	void f动作_滚动(int 百分比);
+	bool f属性_i使用中间() const;
+	bool f属性_i使用全部() const;
+	void f动作_百分比滚动(int 百分比);
+	void f动作_坐标滚动(float);
 	void f更新滑块位置();
 	W连击按钮 w向上按钮{e向上, c按钮滚动百分比};
 	W连击按钮 w向下按钮{e向下, c按钮滚动百分比};
@@ -267,6 +283,7 @@ public:
 	void f响应_计算() override;
 	void f响应_更新() override;
 	void f响应_显示(const S显示参数 &) const override;
+	void f响应_垂直平移(const S平移参数 &) override;
 	S列属性 &f属性_g列属性(int 索引);
 	S行属性 f属性_g行属性();
 	int f属性_g列数() const;	//列数

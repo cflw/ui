@@ -6,6 +6,7 @@
 #include <用户界面接口实现_输入w.h>
 #include <用户界面接口实现_输入x.h>
 #include "窗口.h"
+#include "常量.h"
 namespace 二维 = cflw::图形::d2d;
 namespace 输入w = cflw::输入::win;
 namespace 输入x = cflw::输入::xi;
@@ -40,6 +41,7 @@ public:
 		ma窗口.emplace_back(std::make_unique<W主窗口>());
 		ma窗口.emplace_back(std::make_unique<W窗口1>());
 		ma窗口.emplace_back(std::make_unique<W窗口2>());
+		ma窗口.emplace_back(std::make_unique<W窗口3>());
 	}
 	//消息过程
 	static LRESULT WINAPI f窗口过程(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -73,7 +75,7 @@ public:
 		wc.hIconSm			= nullptr;
 		RegisterClassEx(&wc);
 		//计算窗口大小
-		RECT v窗口矩形 = {0, 0, 640, 480};
+		RECT v窗口矩形 = {0, 0, c窗口宽度, c窗口高度};
 		const DWORD	 c窗口风格 = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
 		AdjustWindowRect(&v窗口矩形, c窗口风格, FALSE);
 		m窗口大小[0] = v窗口矩形.right - v窗口矩形.left;
@@ -97,9 +99,8 @@ public:
 		m窗口大小[1] = v窗口矩形.bottom - v窗口矩形.top;
 	}
 	void f初始化() {
-		m二维.f初始化(m窗口, 1);
-		//assert(二维::C二维::fg这() == &v二维);
-		m输入w.f初始化(m窗口);
+		m二维.f初始化(m窗口, c缩放);
+		m输入w.f初始化(m窗口, c缩放);
 		m输入w.f创建键盘(m键盘);
 		m输入w.f创建鼠标(m鼠标);
 		m输入w.f创建触摸(m触摸);
@@ -108,7 +109,7 @@ public:
 		m鼠标接口.f初始化(*m鼠标);
 		m触摸接口.f初始化(*m触摸);
 		m手柄接口.f初始化(*m手柄);
-		m计时器.f重置(1.0 / 60.0);
+		m计时器.f重置(c帧秒);
 		m计帧器.f重置();
 		m文本工厂.f初始化();
 		二维::S文本格式参数 v文本格式;
@@ -120,7 +121,7 @@ public:
 		m用户界面.f输入_s鼠标接口(m鼠标接口);
 		m用户界面.f输入_s触摸接口(m触摸接口);
 		m用户界面.f输入_s手柄接口(m手柄接口);
-		m用户界面.f新建窗口(*ma窗口.front());
+		m用户界面.f新建窗口(*ma窗口[3]);
 		m画界面.f初始化(m二维);
 	}
 	void f运行() {
@@ -158,8 +159,9 @@ public:
 		m用户界面.f更新();
 	}
 	void f显示() {
-		m二维.f开始();
-		m二维.f清屏();
+		auto &v渲染控制 = m二维.fg渲染控制();
+		v渲染控制.f开始();
+		v渲染控制.f清屏();
 		auto v画图形 = m二维.fc画图形();
 		auto v画文本 = m二维.fc画文本();
 		v画图形->fs颜色(t颜色(1, 1, 1, 1));
@@ -182,7 +184,7 @@ public:
 		//界面
 		m用户界面.f显示();
 		//结束
-		m二维.f结束();
+		v渲染控制.f结束();
 	}
 };
 //=============================================================================

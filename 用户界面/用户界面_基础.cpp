@@ -159,6 +159,57 @@ float S渐变插值::f插值(float a小, float a大) const {
 	return 数学::f插值<float>(a小, a大, m值);
 }
 //==============================================================================
+// 平移计算
+//==============================================================================
+C平移计算::C平移计算(W窗口 &a窗口):
+	m窗口(&a窗口), m来源(E按键来源::e无), m开始位置(), m当前位置(), m速度() {
+}
+bool C平移计算::fi来源(E按键来源 a来源) const {
+	return m来源 == a来源;
+}
+void C平移计算::f重置(E按键来源 a来源, const t向量2 &a位置) {
+	m来源 = a来源;
+	m开始位置 = a位置;
+	m当前位置 = a位置;
+	m速度 = t向量2::c零;
+	m时间点 = E时间点::e开始;
+}
+void C平移计算::f拖动计算(const t向量2 &a位置) {
+	const float v过秒 = m窗口->fg引擎().fg计算秒();
+	const t向量2 v速度 = a位置 - m当前位置;
+	m平滑速度 = (v速度 + m平滑速度) * 0.5f;
+	m速度 = v速度;
+	m当前位置 = a位置;
+	m时间点 = E时间点::e进行中;
+}
+void C平移计算::f滚轮计算(const t向量2 &a位置) {
+	f拖动计算(a位置);
+}
+void C平移计算::f停止计算() {
+	const float v过秒 = m窗口->fg引擎().fg计算秒();
+	const float v减后速度 = m平滑速度.fg大小() + c停止加速度 * v过秒;
+	if (v减后速度 < 1) {
+		m平滑速度 = t向量2::c零;
+	} else {
+		m平滑速度.fs大小(v减后速度);
+		m当前位置 += m平滑速度 * v过秒;
+	}
+	m时间点 = E时间点::e结束;
+}
+void C平移计算::f调用响应() {
+	const auto f调用 = [this, &v目标速度 = (m时间点 == E时间点::e结束 ? m平滑速度 : m速度)]
+	(void (W窗口::*af平移)(const S平移参数 &), const float(t向量2::*ap方向)) {
+		const float v速度 = v目标速度.*ap方向;
+		if (v速度 == 0) {
+			return;
+		}
+		const S平移参数 v参数 = {m来源, m时间点, m开始位置.*ap方向, m当前位置.*ap方向, v速度};
+		(m窗口->*af平移)(v参数);
+	};
+	f调用(&W窗口::f响应_水平平移, &t向量2::x);
+	f调用(&W窗口::f响应_垂直平移, &t向量2::y);
+}
+//==============================================================================
 // 窗口
 //==============================================================================
 W窗口::W窗口() {
@@ -173,6 +224,9 @@ W窗口::~W窗口() {
 	if (m按键切换) {
 		delete m按键切换;
 	}
+	if (m平移计算) {
+		delete m平移计算;
+	}
 }
 void W窗口::f对象_使用() {
 	m标志[e使用] = true;
@@ -182,7 +236,7 @@ void W窗口::f对象_销毁() {
 	m标志[e使用] = false;
 	m标志[e销毁] = true;
 }
-bool W窗口::f对象_i使用() {
+bool W窗口::f对象_i使用() const {
 	return m标志[e使用] && !m标志[e销毁];
 }
 //事件
@@ -195,7 +249,7 @@ void W窗口::f事件_窗口值变化(W窗口&, const int &, int &) {
 void W窗口::f事件_窗口移动(W窗口&, const t向量2 &) {
 }
 void W窗口::f事件_焦点变化(W窗口 &a窗口) {
-	if (a窗口.fi焦点()) {
+	if (a窗口.f状态_i焦点()) {
 		m焦点窗口 = &a窗口;
 	} else {
 		m焦点窗口 = nullptr;
@@ -209,7 +263,7 @@ void W窗口::f响应_销毁() {
 void W窗口::f响应_计算() {
 }
 void W窗口::f响应_更新() {
-	m焦点渐变.f渐变(fi焦点());
+	m焦点渐变.f渐变(f状态_i焦点());
 }
 void W窗口::f响应_显示(const S显示参数 &a) const {
 	if constexpr (c调试) {	//如果调试模式显示圆形,检查焦点是否正确,且重写显示
@@ -257,6 +311,10 @@ void W窗口::f响应_焦点变化() {
 		m父窗口->f事件_焦点变化(*this);
 	}
 }
+void W窗口::f响应_水平平移(const S平移参数 &) {
+}
+void W窗口::f响应_垂直平移(const S平移参数 &) {
+}
 void W窗口::f计算_切换() {
 	const float v计算秒 = fg引擎().fg计算秒();
 	m切换.f计算(!m标志[e使用] || m标志[e消失], v计算秒);
@@ -264,6 +322,14 @@ void W窗口::f计算_切换() {
 void W窗口::f计算_显示() {
 	if (m标志[e消失] && m切换.fg实际() >= 1) {
 		m标志[e显示] = false;
+	}
+}
+void W窗口::f计算_平移() {
+	if (m平移计算) {
+		if (!f状态_i平移焦点()) {
+			m平移计算->f停止计算();
+		}
+		m平移计算->f调用响应();
 	}
 }
 void W窗口::f更新_切换() {
@@ -278,13 +344,16 @@ void W窗口::f动作_添加窗口(W窗口 &a窗口) {
 void W窗口::f动作_关闭() {
 	C用户界面 *v用户界面 = C用户界面::g这;
 	f动作_隐藏();
-	if (fi活动窗口()) {
+	if (f状态_i活动窗口()) {
 		v用户界面->f清除活动窗口();
 	}
 	v用户界面->f遍历子窗口(this, [&](W窗口 &a窗口) {
 		a窗口.f动作_关闭();
 	});
 	m标志[e使用] = false;
+}
+void W窗口::f动作_启用(bool a启用) {
+	m标志[e禁用] = !a启用;
 }
 void W窗口::f动作_禁用(bool a禁用) {
 	m标志[e禁用] = a禁用;
@@ -343,6 +412,12 @@ t矩形 W窗口::fg动画矩形(const t向量2 &a坐标偏移, const t向量2 &a尺寸偏移) const 
 const C总切换 &W窗口::fg总切换() const {
 	return m总切换;
 }
+C平移计算 &W窗口::fg平移计算() {
+	if (m平移计算 == nullptr) {
+		m平移计算 = new C平移计算(*this);
+	}
+	return *m平移计算;
+}
 void W窗口::fs按键切换(E按键切换 a) {
 	if (m按键切换) {
 		delete m按键切换;
@@ -360,13 +435,13 @@ void W窗口::fs按键切换(E按键切换 a) {
 //t颜色 C窗口::fg主题颜色(float p插值, float p亮度, float p透明度) {
 //	return S主题::c白.fg颜色(p插值, p亮度, p透明度);
 //}
-bool W窗口::fi焦点() const {
+bool W窗口::f状态_i焦点() const {
 	return m标志[e焦点];
 }
-bool W窗口::fi弱焦点() const {
+bool W窗口::f状态_i弱焦点() const {
 	return this == fg引擎().m按键焦点;
 }
-bool W窗口::fi活动() const {
+bool W窗口::f状态_i活动() const {
 	C用户界面 &v用户界面 = fg引擎();
 	const W窗口 *const v活动窗口 = v用户界面.m活动窗口;
 	const W窗口 *v窗口 = this;
@@ -378,15 +453,22 @@ bool W窗口::fi活动() const {
 	}
 	return false;
 }
-bool W窗口::fi活动窗口() const {
+bool W窗口::f状态_i活动窗口() const {
 	C用户界面 &v用户界面 = fg引擎();
 	return v用户界面.m活动窗口 == this;
 }
-bool W窗口::fi按下() const {
+bool W窗口::f状态_i按下() const {
 	return (m标志[e鼠标按下] && m标志[e鼠标范围]) || m标志[e按键按下];
 }
-bool W窗口::fi可获得按键焦点() const {
-	return m标志[W窗口::e使用] && !m标志[W窗口::e禁用] && !m标志[W窗口::e纯鼠标];
+bool W窗口::f标志_i启用() const {
+	return !m标志[e禁用];
+}
+bool W窗口::f标志_i可获得按键焦点() const {
+	return f对象_i使用() && f标志_i启用() && m标志[W窗口::e可获得按键焦点];
+}
+bool W窗口::f状态_i平移焦点() const {
+	C用户界面 &v用户界面 = fg引擎();
+	return v用户界面.m平移焦点 == this;
 }
 std::vector<W窗口*> W窗口::fg子窗口() {
 	return ma子窗口;
@@ -396,6 +478,8 @@ void W窗口::f标志_s默认() {
 	m标志[e显示] = true;
 	m标志[e显示背景] = true;
 	m标志[e显示边框] = true;
+	m标志[e可获得鼠标焦点] = true;
+	m标志[e可获得按键焦点] = true;
 }
 void W窗口::f标志_s继承显示() {
 	m继承标志[e显示] = true;
@@ -428,7 +512,19 @@ bool W窗口::f标志_i显示背景() const {
 bool W窗口::f标志_i显示() const {
 	return f标志_g继承_否优先(e显示);
 }
-
+bool W窗口::f标志_i可获得平移焦点() const {
+	return m标志[W窗口::e可获得平移焦点];
+}
+void W窗口::f标志_s平移(bool a) {
+	m标志[W窗口::e可获得平移焦点] = a;
+}
+bool W窗口::f标志_i纯鼠标() const {
+	return m标志[W窗口::e可获得鼠标焦点] && !m标志[W窗口::e可获得按键焦点];
+}
+void W窗口::f标志_s纯鼠标() {
+	m标志[W窗口::e可获得鼠标焦点] = true;
+	m标志[W窗口::e可获得按键焦点] = false;
+}
 }	//namespace 用户界面
 //==============================================================================
 namespace std {

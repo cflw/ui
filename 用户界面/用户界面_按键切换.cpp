@@ -74,7 +74,7 @@ W窗口 *C按键切换_序号::f切换(bool a前进) {
 	do {
 		v下个 = f变化(v下个);
 		W窗口 *v窗口 = *v下个;
-		if (!v窗口->fi可获得按键焦点()) {
+		if (!v窗口->f标志_i可获得按键焦点()) {
 			continue;
 		}
 		return v窗口;
@@ -110,7 +110,7 @@ W窗口 *C按键切换_坐标::f切换(const float t向量2::*ap主顺序, const float t向量2::
 	const auto &vf主正比较 = af主比较;
 	const auto &vf主反比较 = std::bind(工具::f非, std::bind(af主比较, std::placeholders::_1, std::placeholders::_2));
 	for (W窗口 *vp窗口 : ma窗口) {	//遍历选择前进方向最近的窗口
-		if (!vp窗口->fi可获得按键焦点()) {
+		if (!vp窗口->f标志_i可获得按键焦点()) {
 			continue;
 		}
 		const float &v当前坐标0 = vp窗口->m坐标.*ap主顺序;

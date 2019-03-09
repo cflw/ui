@@ -44,7 +44,7 @@ void W表格::W行::f响应_计算() {
 		f动作_隐藏();
 		const float v切换值 = (std::abs(m坐标.y) - v表格上) / v行高;	//在表外是正数
 		m切换.m实际 = std::max<float>(m切换.m实际, v切换值);
-		if (fi焦点()) {	//被动切换按键焦点
+		if (f状态_i焦点()) {	//被动切换按键焦点
 			f焦点转移(m坐标.y < v目标y, false);
 		}
 	} else {
@@ -83,7 +83,7 @@ W表格::C行流 W表格::W行::f流() {
 	return C行流(*this);
 }
 bool W表格::W行::f焦点转移(bool a前进, bool a强切换) {
-	assert(fi焦点());
+	assert(f状态_i焦点());
 	const int v前进 = a前进 ? 1 : -1;
 	const int v目标行号 = m行号 + v前进;
 	if (v目标行号 < 0 || v目标行号 >= mp表格->f属性_g行数()) {
@@ -92,7 +92,7 @@ bool W表格::W行::f焦点转移(bool a前进, bool a强切换) {
 	void (W窗口::*const vf获得焦点)() = a强切换 ? &W窗口::f动作_获得焦点 : &W窗口::f动作_获得弱焦点;
 	W行 &v目标行 = *mp表格->ma行[v目标行号];
 	if (a强切换 && v目标行.m标志[e消失]) {
-		mp表格->w垂直滚动条.f动作_滚动(v前进);
+		mp表格->w垂直滚动条.f动作_百分比滚动(v前进);
 	}
 	(v目标行.*vf获得焦点)();
 	return true;
@@ -117,6 +117,7 @@ W表格::C行流 &W表格::C行流::operator >>(std::wstring &a) {
 W表格::W表格(int a标识, int a值):
 	W窗口(a标识, a值),
 	w垂直滚动条(a标识, -1) {
+	m标志[e禁用] = false;
 }
 void W表格::f初始化_列数(int a列数) {
 	m列数 = a列数;
@@ -135,7 +136,7 @@ void W表格::f事件_窗口值变化(W窗口 &a窗口, const int &a前, int &a后) {
 }
 void W表格::f事件_焦点变化(W窗口 &a窗口) {
 	if (W行 *vp行 = dynamic_cast<W行*>(&a窗口)) {
-		if (a窗口.fi焦点()) {
+		if (a窗口.f状态_i焦点()) {
 			m焦点窗口 = &a窗口;
 			int v新值 = a窗口.m值;
 			m父窗口->f事件_窗口值变化(*this, m焦点行号, v新值);
@@ -145,12 +146,12 @@ void W表格::f事件_焦点变化(W窗口 &a窗口) {
 	}
 }
 void W表格::f响应_初始化() {
-	//计算列宽
+	//计算总列宽
 	float v总列宽 = 0;
 	for (const S列属性 &v列属性 : ma列属性) {
 		v总列宽 += v列属性.m列宽;
 	}
-	//计算列宽
+	//计算单列宽
 	const float v左 = -m尺寸.x * 0.5f;
 	const float v右 = m尺寸.x * 0.5f - W垂直滚动条::c边长;
 	const float v内容宽 = v右 - v左;
@@ -208,6 +209,10 @@ void W表格::f响应_显示(const S显示参数 &a) const {
 	if (f标志_i显示边框()) {
 		a.m画界面.f绘制矩形(m焦点动画矩形, v前景色);
 	}
+}
+void W表格::f响应_垂直平移(const S平移参数 &a) {
+	//控制滚动条滑块位置
+	w垂直滚动条.f动作_坐标滚动(-a.m速度);
 }
 W表格::S列属性 &W表格::f属性_g列属性(int a索引) {
 	return ma列属性[a索引];
@@ -287,6 +292,8 @@ void W表格::f重置滚动条值() {
 	const int v减标题行 = m标志[e标题行] ? -1 : 0;
 	const int v行数 = ma行.size() + v减标题行;
 	const int v显示容量 = (m尺寸.y / m行属性.m行高) + v减标题行;
-	w垂直滚动条.f属性_s容纳值(v行数, v显示容量);
+	w垂直滚动条.f属性_s容纳值(v行数, v显示容量);	//由滚动条计算出是否显示,再确定是否可以平移
+	const bool vi垂直平移 = w垂直滚动条.f属性_i使用全部();
+	f标志_s平移(vi垂直平移);
 }
 }	//namespace 用户界面
