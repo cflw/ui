@@ -235,13 +235,14 @@ public:
 	virtual void f属性_s布局(const t向量2 &坐标 = {}, const t向量2 &尺寸 = {});
 	void f属性_s布局(float 左, float 上, float 右, float 下);
 	void f属性_s布局(const S布局参数 &);
-	t向量2 f属性_g坐标() const;
+	t向量2 f属性_g坐标() const;	//屏幕坐标
 	t向量2 fg动画坐标(const t向量2 &偏移 = t向量2::c零) const;
 	t向量2 fg动画尺寸(const t向量2 &偏移 = t向量2::c零) const;
 	t矩形 fg动画矩形(const t向量2 &坐标偏移 = t向量2::c零, const t向量2 &范围偏移 = t向量2::c零) const;
 	const C总切换 &fg总切换() const;	//结合父窗口,计算出总的切换
 	void fs按键切换(E按键切换);
 	C平移计算 &fg平移计算();
+	void f按键切换计算(const S方向键参数 &);	//m按键切换 必需有值
 	//t颜色 fg主题颜色(float, float, float);
 	//由引擎控制的标志状态
 	bool f状态_i焦点() const;	//窗口是否获得焦点
@@ -274,7 +275,7 @@ public:	//管理需要，由 C用户界面 控制
 	I按键切换 *m按键切换 = nullptr;
 	C平移计算 *m平移计算 = nullptr;
 public:	//可变
-	t向量2 m坐标 = t向量2::c零;
+	t向量2 m坐标 = t向量2::c零;	//相对于父窗口的坐标
 	t向量2 m尺寸 = t向量2(8, 8);
 	C切换动画 m切换;
 	C总切换 m总切换;

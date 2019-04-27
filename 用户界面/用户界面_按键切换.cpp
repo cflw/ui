@@ -103,32 +103,34 @@ W窗口 *C按键切换_坐标::f左右切换(bool a前进) {
 W窗口 *C按键切换_坐标::f切换(const float t向量2::*ap主顺序, const float t向量2::*ap次顺序, const std::function<bool(const float &, const float &)> &af主比较) {
 	struct S选择 {
 		W窗口 *m窗口 = nullptr;
-		float m主距离 = 0, m次距离 = 0;
+		float m主距离 = 0, m次距离 = 0, m直线距离 = 0;
 	} v近, v远;
-	const float &v焦点坐标0 = m引擎->m按键焦点->m坐标.*ap主顺序;
-	const float &v焦点坐标1 = m引擎->m按键焦点->m坐标.*ap次顺序;
+	const float &v焦点坐标0 = m引擎->m按键焦点->f属性_g坐标().*ap主顺序;
+	const float &v焦点坐标1 = m引擎->m按键焦点->f属性_g坐标().*ap次顺序;
 	const auto &vf主正比较 = af主比较;
 	const auto &vf主反比较 = std::bind(工具::f非, std::bind(af主比较, std::placeholders::_1, std::placeholders::_2));
 	for (W窗口 *vp窗口 : ma窗口) {	//遍历选择前进方向最近的窗口
 		if (!vp窗口->f标志_i可获得按键焦点()) {
 			continue;
 		}
-		const float &v当前坐标0 = vp窗口->m坐标.*ap主顺序;
+		const float &v当前坐标0 = vp窗口->f属性_g坐标().*ap主顺序;
 		if (v焦点坐标0 == v当前坐标0) {
 			continue;
 		}
-		const float &v当前坐标1 = vp窗口->m坐标.*ap次顺序;
+		const float &v当前坐标1 = vp窗口->f属性_g坐标().*ap次顺序;
 		const float v主距离1 = std::abs(v焦点坐标0 - v当前坐标0);
 		const float v次距离1 = std::abs(v焦点坐标1 - v当前坐标1);
+		const float v直线距离 = std::hypot(v主距离1, v次距离1);
 		const auto f选择 = [&](S选择 &a选择, const std::function<bool(const float &, const float &)> &af主比较1, const std::function<bool(const float &, const float &)> &af距离比较) {
 			const auto f更新选择 = [&]() {
 				a选择.m窗口 = vp窗口;
 				a选择.m主距离 = v主距离1;
 				a选择.m次距离 = v次距离1;
+				a选择.m直线距离 = v直线距离;
 			};
 			if (af主比较1(v当前坐标0, v焦点坐标0)) {
 				if (a选择.m窗口) {
-					if (af距离比较(v主距离1, a选择.m主距离)) {
+					if ((v直线距离 <= a选择.m直线距离) && af距离比较(v主距离1, a选择.m主距离)) {
 						f更新选择();
 					} else if (v主距离1 == a选择.m主距离 && v次距离1 < a选择.m次距离) {
 						f更新选择();

@@ -42,6 +42,7 @@ public:
 		ma窗口.emplace_back(std::make_unique<W窗口1>());
 		ma窗口.emplace_back(std::make_unique<W窗口2>());
 		ma窗口.emplace_back(std::make_unique<W窗口3>());
+		ma窗口.emplace_back(std::make_unique<W窗口4>());
 	}
 	//消息过程
 	static LRESULT WINAPI f窗口过程(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -121,7 +122,7 @@ public:
 		m用户界面.f输入_s鼠标接口(m鼠标接口);
 		m用户界面.f输入_s触摸接口(m触摸接口);
 		m用户界面.f输入_s手柄接口(m手柄接口);
-		m用户界面.f新建窗口(*ma窗口[3]);
+		m用户界面.f新建窗口(*ma窗口[4]);
 		m画界面.f初始化(m二维);
 	}
 	void f运行() {

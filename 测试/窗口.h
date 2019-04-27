@@ -68,3 +68,11 @@ public:
 	用户界面::W标签 w标签0, w标签1;
 	用户界面::W按钮 w加行{e加行}, w减行{e减行};
 };
+//选项卡
+class W窗口4 : public 用户界面::W窗口 {
+public:
+	W窗口4();
+	void f响应_初始化() override;
+	用户界面::W选项卡组 w选项卡组;
+	std::vector<用户界面::W标签> ma标签;
+};

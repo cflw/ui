@@ -12,8 +12,8 @@ public:
 	C控件文本() = default;
 	C控件文本(const std::wstring &, float 字号 = c字号, E对齐 对齐 = e居中);
 	void f属性_s空文本();
-	void f属性_s文本(const std::wstring &文本, float 字号 = c字号, E对齐 对齐 = e居中);
-	void f属性_s文本内容(const std::wstring &);
+	void f属性_s文本(const std::wstring_view &文本, float 字号 = c字号, E对齐 对齐 = e居中);
+	void f属性_s文本内容(const std::wstring_view &);
 	void f属性_s文本字号(float);
 	void f属性_s文本对齐(E对齐);
 	bool f属性_i有文本() const;
@@ -208,10 +208,11 @@ public:
 	void f响应_初始化() override;
 	bool f响应_i范围内(const t向量2 &) override;
 	void f响应_鼠标松开(const S按键参数 &) override;
+	void f响应_方向键(const S方向键参数 &) override;
 	void f属性_s列表(const std::vector<std::wstring> &);
 	std::vector<std::wstring> &f属性_g列表();
 	const std::vector<std::wstring> &f属性_g列表() const;
-	t标志::reference fg下拉();
+	t标志::reference fi下拉();
 	float f下拉时_g底部范围();	//是负数
 	bool f下拉时_i范围内(const t向量2 &);
 	float f下拉时_g半高度();
@@ -268,7 +269,7 @@ public:
 	class C行流 {
 	public:
 		C行流(W行 &);
-		C行流 &operator <<(const std::wstring &);
+		C行流 &operator <<(const std::wstring_view &);
 		C行流 &operator >>(std::wstring &);
 		W行 *m行 = nullptr;
 		int i = 0;
@@ -309,5 +310,44 @@ public:
 	int m焦点行号 = -1;
 	int m行值 = 0;
 	bool m重置行号 = true;
+};
+//==============================================================================
+// 超复杂控件-选项卡组
+//==============================================================================
+class W选项卡组 : public W窗口 {
+public:
+	static constexpr float c页按钮宽 = 50;
+	static constexpr float c页按钮高 = 20;
+	enum E标识 {
+		e页按钮
+	};
+	enum E标志 {
+		e活动 = W窗口::e自定义,
+	};
+	class W页按钮 : public W按钮 {
+	public:
+		W页按钮(int 值);
+		void f响应_更新() override;
+		void f响应_显示(const S显示参数 &) const override;
+		S渐变插值 m活动渐变;
+	};
+	struct S页 {
+		W窗口 *m窗口;
+		std::unique_ptr<W页按钮> m按钮;
+	};
+	W选项卡组(int = -1, int = 0);
+	void f事件_按键(W窗口 &, const S按键参数 &);
+	void f响应_初始化();
+	void f动作_添加页(W窗口 &页, const std::wstring_view &标签);
+	void f动作_方向切换(bool 方向);
+	void f动作_切换(int 序号);
+	void f属性_s页按钮尺寸(const t向量2 &);
+	void f属性_s页按钮宽(float);
+	void f属性_s页按钮高(float);
+	S布局参数 f属性_g页按钮布局(int 序号) const;
+	void f重置页按钮布局();
+	std::vector<S页> ma页;
+	int m页序号 = -1;
+	t向量2 m页按钮尺寸{c页按钮宽, c页按钮高};
 };
 }	//namespace 用户界面

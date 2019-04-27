@@ -22,13 +22,13 @@ C控件文本::C控件文本(const std::wstring &a文本, float a字号, E对齐
 void C控件文本::f属性_s空文本() {
 	m文本.clear();
 }
-void C控件文本::f属性_s文本(const std::wstring &a文本, float a字号, E对齐 a对齐) {
+void C控件文本::f属性_s文本(const std::wstring_view &a文本, float a字号, E对齐 a对齐) {
 	assert(a字号 > 1);
 	f属性_s文本内容(a文本);
 	f属性_s文本字号(a字号);
 	f属性_s文本对齐(a对齐);
 }
-void C控件文本::f属性_s文本内容(const std::wstring &a文本) {
+void C控件文本::f属性_s文本内容(const std::wstring_view &a文本) {
 	m文本 = a文本;
 }
 void C控件文本::f属性_s文本字号(float a字号) {
@@ -604,11 +604,12 @@ void W垂直滚动条::f更新滑块位置() {
 W下拉列表::W下拉列表(int n, int v): W窗口(n, v) {
 	f动作_启用();
 	f标志_s纯鼠标();
+	fs按键切换(E按键切换::e序号);
 }
 void W下拉列表::f事件_按键(W窗口 &a窗口, const S按键参数 &a按键) {
+	auto v下拉 = fi下拉();
 	switch (a按键.m按键) {
 	case E按键::e确定: {
-		auto v下拉 = fg下拉();
 		if (v下拉) {
 			if (a窗口.m标识 == e下拉按钮) {
 				m焦点项 = a窗口.m值;
@@ -620,7 +621,11 @@ void W下拉列表::f事件_按键(W窗口 &a窗口, const S按键参数 &a按�
 		break;
 	}
 	case E按键::e取消:
-		f结束下拉();
+		if (v下拉) {
+			f结束下拉();
+		} else {
+			m父窗口->f事件_按键(*this, a按键);
+		}
 		break;
 	}
 }
@@ -628,11 +633,13 @@ void W下拉列表::f响应_初始化() {
 	w中心按钮.f属性_s文本(f属性_g选中文本(), c字号, e居左);
 	w中心按钮.f属性_s布局(t向量2::c零, m尺寸);
 	w中心按钮.f标志_s继承显示();
+	w中心按钮.f动作_显示();
 	f动作_添加窗口(w中心按钮);
 	w标签.f属性_s文本(c向下空三角, c字号, e居右);
 	w标签.f属性_s布局(t向量2::c零, m尺寸 + t向量2(-4, 0));
 	w标签.f属性_s透明度(0.5f);
 	w标签.f标志_s继承显示();
+	w标签.f动作_显示();
 	f动作_添加窗口(w标签);
 }
 bool W下拉列表::f响应_i范围内(const t向量2 &a坐标) {
@@ -641,7 +648,7 @@ bool W下拉列表::f响应_i范围内(const t向量2 &a坐标) {
 void W下拉列表::f响应_鼠标松开(const S按键参数 &a) {
 	switch (a.m按键) {
 	case E按键::e确定: {
-		auto v下拉 = fg下拉();
+		auto v下拉 = fi下拉();
 		if (v下拉) {
 			if (!f下拉时_i范围内(a.m坐标)) {
 				f事件_按键(*this, {a.m来源, E按键::e取消, a.m时间点, a.m坐标});
@@ -649,6 +656,14 @@ void W下拉列表::f响应_鼠标松开(const S按键参数 &a) {
 		}
 		break;
 	}
+	}
+}
+void W下拉列表::f响应_方向键(const S方向键参数 &a方向键) {
+	auto v下拉 = fi下拉();
+	if (v下拉) {
+		f按键切换计算(a方向键);
+	} else {
+		m父窗口->f响应_方向键(a方向键);
 	}
 }
 void W下拉列表::f属性_s列表(const std::vector<std::wstring> &a列表) {
@@ -662,7 +677,7 @@ std::vector<std::wstring> &W下拉列表::f属性_g列表() {
 const std::vector<std::wstring> &W下拉列表::f属性_g列表() const {
 	return ma文本;
 }
-t标志::reference W下拉列表::fg下拉() {
+t标志::reference W下拉列表::fi下拉() {
 	return m标志[e下拉];
 }
 float W下拉列表::f下拉时_g底部范围() {
@@ -683,8 +698,8 @@ float W下拉列表::f下拉时_g半高度() {
 	return m尺寸.y * (ma文本.size() + 1);
 }
 void W下拉列表::f开始下拉() {
-	auto v下拉 = fg下拉();
-	assert(v下拉 == false);
+	auto v下拉 = fi下拉();
+	assert(!v下拉);
 	//更新列表
 	if (m标志[e更新列表] == false || ma文本.size() != ma下拉按钮.size()) {
 		int v值 = 0;
@@ -717,8 +732,8 @@ void W下拉列表::f开始下拉() {
 	v下拉 = true;
 }
 void W下拉列表::f结束下拉() {
-	auto v下拉 = fg下拉();
-	assert(v下拉 == true);
+	auto v下拉 = fi下拉();
+	assert(v下拉);
 	if (m焦点项 != m选择项) {
 		m父窗口->f事件_窗口值变化(*this, m选择项, m焦点项);
 		m选择项 = m焦点项;

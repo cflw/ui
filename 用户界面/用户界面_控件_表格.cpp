@@ -103,7 +103,7 @@ bool W表格::W行::f焦点转移(bool a前进, bool a强切换) {
 W表格::C行流::C行流(W表格::W行 &a行):
 	m行(&a行) {
 }
-W表格::C行流 &W表格::C行流::operator <<(const std::wstring &a) {
+W表格::C行流 &W表格::C行流::operator <<(const std::wstring_view &a) {
 	m行->fg列(i++) = a;
 	return *this;
 }

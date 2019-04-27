@@ -10,9 +10,8 @@ namespace 用户界面 {
 class C用户界面 {
 public:
 	static C用户界面 *g这;
-	struct S调用信息 {
-		W窗口 *m焦点;
-		W窗口 *m活动;
+	struct S活动信息 {
+		W窗口 *m焦点;	//该活动窗口下的焦点窗口
 	};
 	struct S方向键变量 {
 		输入::C按住重复 m重复;
@@ -59,7 +58,8 @@ public:
 public:
 	std::vector<W窗口*> ma窗口表;
 	std::vector<W窗口*> ma新建窗口;	//新建的窗口先放这,下次计算再放到窗口表
-	std::stack<S调用信息> m调用栈;
+	std::stack<W窗口*> m调用栈;
+	std::map<W窗口*, S活动信息> ma活动窗口;
 	std::vector<wchar_t> ma字符;
 	W窗口 *m处理窗口 = nullptr;
 	W窗口 *m按键焦点 = nullptr;
