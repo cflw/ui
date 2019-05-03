@@ -1,14 +1,14 @@
-#pragma once
+ï»¿#pragma once
 #include <memory>
 #include <Windows.h>
-#include <ÓÃ»§½çÃæ.h>
-class C³ÌĞò {
+#include <ç”¨æˆ·ç•Œé¢.h>
+class Cç¨‹åº {
 public:
-	static void f³õÊ¼»¯(HINSTANCE);
-	static void fÔËĞĞ();
-	static void fÏú»Ù();
-	static ÓÃ»§½çÃæ::W´°¿Ú &fg´°¿Ú(int);
+	static void fåˆå§‹åŒ–(HINSTANCE);
+	static void fè¿è¡Œ();
+	static void fé”€æ¯();
+	static ç”¨æˆ·ç•Œé¢::Wçª—å£ &fgçª—å£(int);
 private:
-	class CÊµÏÖ;
-	static std::unique_ptr<CÊµÏÖ> mÊµÏÖ;
+	class Cå®ç°;
+	static std::unique_ptr<Cå®ç°> må®ç°;
 };

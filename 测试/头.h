@@ -1,7 +1,8 @@
-#pragma once
-#include <cflwÊ±¼ä.h>
-#include "ÓÃ»§½çÃæ.h"
-namespace Ê±¼ä = cflw::Ê±¼ä;
-namespace ÊıÑ§ = cflw::ÊıÑ§;
-typedef ÊıÑ§::SÏòÁ¿2 tÏòÁ¿2;
-typedef ÊıÑ§::SÑÕÉ« tÑÕÉ«;
+ï»¿#pragma once
+#include <cflwæ—¶é—´.h>
+#include "ç”¨æˆ·ç•Œé¢.h"
+namespace æ—¶é—´ = cflw::æ—¶é—´;
+namespace æ•°å­¦ = cflw::æ•°å­¦;
+using tå‘é‡2 = æ•°å­¦::Så‘é‡2;
+using té¢œè‰² = æ•°å­¦::Sé¢œè‰²;
+using tçŸ©å½¢ = æ•°å­¦::SçŸ©å½¢;

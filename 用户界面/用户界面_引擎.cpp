@@ -107,16 +107,7 @@ void C用户界面::f计算() {
 	const auto f更新鼠标焦点 = [this](const t向量2 &a坐标) {
 		W窗口 *v目标窗口 = nullptr;
 		for (auto &vp窗口 : ma窗口表) {
-			if (!vp窗口->f对象_i使用()) {
-				continue;
-			}
-			if (vp窗口->m标志[W窗口::e禁用]) {
-				continue;
-			}
-			if (!vp窗口->m标志[W窗口::e可获得鼠标焦点]) {
-				continue;
-			}
-			if (!vp窗口->f状态_i活动()) {
+			if (!vp窗口->f状态_i可获得鼠标焦点()) {
 				continue;
 			}
 			f跟踪处理(*vp窗口);
@@ -139,16 +130,7 @@ void C用户界面::f计算() {
 	const auto f更新平移焦点 = [this](const t向量2 &a坐标) {
 		W窗口 *v目标窗口 = nullptr;
 		for (auto &vp窗口 : ma窗口表) {
-			if (!vp窗口->f对象_i使用()) {
-				continue;
-			}
-			if (vp窗口->m标志[W窗口::e禁用]) {
-				continue;
-			}
-			if (!vp窗口->f状态_i活动()) {
-				continue;
-			}
-			if (!vp窗口->f标志_i可获得平移焦点()) {
+			if (!vp窗口->f状态_i可获得平移焦点()) {
 				continue;
 			}
 			f跟踪处理(*vp窗口);

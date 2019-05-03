@@ -65,7 +65,7 @@ public:
 	static float f按行计算高度(int);
 	void f响应_显示(const S显示参数 &) const override;
 	void f响应_字符(const std::vector<wchar_t> &) override;
-	void f属性_s布局(const t向量2 &, const t向量2 &) override;
+	void f属性_s布局(const S布局参数 &) override;
 	void f属性_s多行(bool);
 	void f属性_s限制字数(size_t);
 	std::wstring m文本;
@@ -107,7 +107,7 @@ public:
 	bool f响应_i范围内(const t向量2 &) override;
 	void f响应_鼠标按下(const S按键参数 &) override;
 	void f响应_鼠标松开(const S按键参数 &) override;
-	void f属性_s布局(const t向量2 &, const t向量2 &) override;
+	void f属性_s布局(const S布局参数 &) override;
 	t向量2 m鼠标坐标;
 	t向量2 m被动坐标;	//被其它窗口改变的坐标,有平滑移动
 };
@@ -120,7 +120,7 @@ public:
 	bool f响应_i范围内(const t向量2 &) override;
 	void f响应_垂直平移(const S平移参数 &) override;
 	void f响应_水平平移(const S平移参数 &) override;
-	void f属性_s布局(const t向量2 &, const t向量2 &) override;
+	void f属性_s布局(const S布局参数 &) override;
 	void f响应平移(const S平移参数 &, float (t向量2::*));
 	t向量2 m被动坐标;
 };
@@ -163,7 +163,7 @@ public:
 	void f事件_按键(W窗口 &, const S按键参数 &) override;
 	void f响应_初始化() override;
 	void f响应_计算() override;
-	void f属性_s布局(const t向量2 &, const t向量2 &) override;
+	void f属性_s布局(const S布局参数 &) override;
 	void f属性_s布局(W窗口&, float 上偏移, float 下偏移);	//垂直滚动条附着在窗口右边
 	void f属性_s滚动值(int 最大位置, int 显示范围);	//滑块位置=[0,最大位置), 滚到底时最后一行在顶部
 	void f属性_s容纳值(int 最大位置, int 显示范围);	//滑块位置=[0,最大位置-显示范围], 滚到底时最后一行在底部
@@ -225,6 +225,35 @@ public:
 	W标签 w标签;
 	int m选择项 = 0;
 	int m焦点项 = -1;
+};
+//==============================================================================
+// 复杂控件-横向选择列表
+//==============================================================================
+class W横向选择列表 : public W窗口 {
+public:
+	enum E标识 {
+		e标签框,
+		e左按钮,
+		e右按钮,
+	};
+	class W显示框 : public W窗口, public C控件文本 {
+	public:
+		W显示框(int = -1, int = 0);
+		void f响应_显示(const S显示参数 &) const override;
+		void f响应_方向键(const S方向键参数 &) override;
+	};
+	static constexpr float c边长 = 16;
+	W横向选择列表(int = -1, int = 0);
+	void f事件_按键(W窗口 &, const S按键参数 &) override;
+	void f响应_初始化() override;
+	void f属性_s布局(const S布局参数 &) override;
+	void f左();
+	void f右();
+	void f切换项(int &(*变化)(int &));
+	std::vector<std::wstring> ma文本;
+	W按钮 w左, w右;
+	W显示框 w中;
+	int m选择项 = 0;
 };
 //==============================================================================
 // 超复杂控件-表格
@@ -318,6 +347,7 @@ class W选项卡组 : public W窗口 {
 public:
 	static constexpr float c页按钮宽 = 50;
 	static constexpr float c页按钮高 = 20;
+	static constexpr float c文本大小 = 16;
 	enum E标识 {
 		e页按钮
 	};
@@ -345,9 +375,11 @@ public:
 	void f属性_s页按钮宽(float);
 	void f属性_s页按钮高(float);
 	S布局参数 f属性_g页按钮布局(int 序号) const;
+	void f属性_s文本大小(float);
 	void f重置页按钮布局();
 	std::vector<S页> ma页;
 	int m页序号 = -1;
+	float m文本大小 = c文本大小;
 	t向量2 m页按钮尺寸{c页按钮宽, c页按钮高};
 };
 }	//namespace 用户界面

@@ -1,13 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27906.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28822.285
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "用户界面", "用户界面.vcxproj", "{B241C66B-8A81-4160-BE52-A3FDAAC8E6AF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AD010D5B-4048-48C8-9BE6-82484BEC32B1} = {AD010D5B-4048-48C8-9BE6-82484BEC32B1}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cflw代码库cpp", "..\cflw代码库\cflw代码库.vcxproj", "{AD010D5B-4048-48C8-9BE6-82484BEC32B1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "用户界面测试", "测试\测试.vcxproj", "{7A4B3024-9A54-4E82-8CE3-391F579EFA4E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AD010D5B-4048-48C8-9BE6-82484BEC32B1} = {AD010D5B-4048-48C8-9BE6-82484BEC32B1}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

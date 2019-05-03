@@ -12,12 +12,12 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="控件">
+      <UniqueIdentifier>{1c464bfc-e278-41c7-91f6-63cba5565fcd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="用户界面.cpp">
-      <Filter>用户界面</Filter>
-    </ClCompile>
-    <ClCompile Include="用户界面_控件.cpp">
       <Filter>用户界面</Filter>
     </ClCompile>
     <ClCompile Include="用户界面_基础.cpp">
@@ -41,18 +41,21 @@
     <ClCompile Include="用户界面_按键切换.cpp">
       <Filter>用户界面</Filter>
     </ClCompile>
-    <ClCompile Include="用户界面_控件_表格.cpp">
-      <Filter>用户界面</Filter>
-    </ClCompile>
     <ClCompile Include="用户界面_控件_选项卡.cpp">
-      <Filter>用户界面</Filter>
+      <Filter>控件</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_控件_表格.cpp">
+      <Filter>控件</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_控件.cpp">
+      <Filter>控件</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_控件_横向选择列表.cpp">
+      <Filter>控件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="用户界面.h">
-      <Filter>用户界面</Filter>
-    </ClInclude>
-    <ClInclude Include="用户界面_控件.h">
       <Filter>用户界面</Filter>
     </ClInclude>
     <ClInclude Include="用户界面_基础.h">
@@ -81,6 +84,9 @@
     </ClInclude>
     <ClInclude Include="用户界面_按键切换.h">
       <Filter>用户界面</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面_控件.h">
+      <Filter>控件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

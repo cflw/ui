@@ -99,6 +99,12 @@ bool S方向键参数::fi上下() const {
 bool S方向键参数::fi左右() const {
 	return x != 0;
 }
+S布局参数::S布局参数(const t向量2 &a坐标, const t向量2 &a尺寸):
+	m坐标(a坐标), m尺寸(a尺寸) {
+}
+S布局参数::S布局参数(const t矩形 &a矩形):
+	m坐标(a矩形.fg中心()), m尺寸(a矩形.fg尺寸()) {
+}
 //==============================================================================
 // 切换动画计算
 //==============================================================================
@@ -373,16 +379,10 @@ void W窗口::f动作_获得弱焦点() {
 C用户界面 &W窗口::fg引擎() {
 	return *C用户界面::g这;
 }
-void W窗口::f属性_s布局(const t向量2 &a坐标, const t向量2 &a尺寸) {
-	assert(a尺寸.x >= 0 && a尺寸.y >= 0);
-	m坐标 = a坐标;
-	m尺寸 = a尺寸;
-}
-void W窗口::f属性_s布局(const S布局参数 &a) {
-	this->f属性_s布局(a.m坐标, a.m尺寸);
-}
-void W窗口::f属性_s布局(float a左, float a上, float a右, float a下) {
-	f属性_s布局(t向量2::fc矩形中心(a左, a上, a右, a下), t向量2::fc矩形尺寸(a左, a上, a右, a下));
+void W窗口::f属性_s布局(const S布局参数 &a参数) {
+	assert(a参数.m尺寸.x >= 0 && a参数.m尺寸.y >= 0);
+	m坐标 = a参数.m坐标;
+	m尺寸 = a参数.m尺寸;
 }
 t向量2 W窗口::f属性_g坐标() const {
 	return C动画计算::f坐标_无(*this);
@@ -466,12 +466,33 @@ bool W窗口::f状态_i按下() const {
 bool W窗口::f标志_i启用() const {
 	return !m标志[e禁用];
 }
-bool W窗口::f标志_i可获得按键焦点() const {
-	return f对象_i使用() && f标志_i启用() && m标志[W窗口::e可获得按键焦点];
-}
 bool W窗口::f状态_i平移焦点() const {
 	C用户界面 &v用户界面 = fg引擎();
 	return v用户界面.m平移焦点 == this;
+}
+bool W窗口::f状态_i显示完成() const {
+	return m总切换.fg透明度() >= 0.9f;
+}
+bool W窗口::f状态_i可获得按键焦点() const {
+	return f对象_i使用() && 
+		f标志_i启用() && 
+		m标志[W窗口::e可获得按键焦点] &&
+		f状态_i活动() &&
+		f状态_i显示完成();
+}
+bool W窗口::f状态_i可获得鼠标焦点() const {
+	return f对象_i使用() && 
+		f标志_i启用() && 
+		m标志[W窗口::e可获得鼠标焦点] && 
+		f状态_i活动() && 
+		f状态_i显示完成();
+}
+bool W窗口::f状态_i可获得平移焦点() const {
+	return f对象_i使用() &&
+		f标志_i启用() &&
+		m标志[W窗口::e可获得平移焦点] &&
+		f状态_i活动() &&
+		f状态_i显示完成();
 }
 std::vector<W窗口*> W窗口::fg子窗口() {
 	return ma子窗口;
@@ -514,9 +535,6 @@ bool W窗口::f标志_i显示背景() const {
 }
 bool W窗口::f标志_i显示() const {
 	return f标志_g继承_否优先(e显示);
-}
-bool W窗口::f标志_i可获得平移焦点() const {
-	return m标志[W窗口::e可获得平移焦点];
 }
 void W窗口::f标志_s平移(bool a) {
 	m标志[W窗口::e可获得平移焦点] = a;
