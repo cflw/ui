@@ -1,29 +1,29 @@
-#pragma once
-#include <cflwÍ¼ĞÎ_d2d.h>
-#include "ÓÃ»§½çÃæ_½Ó¿Ú.h"
-namespace ÓÃ»§½çÃæ::½Ó¿ÚÊµÏÖ {
-namespace ¶şÎ¬ = cflw::Í¼ĞÎ::d2d;
-using cflw::Í¼ĞÎ::d2d::EÎÄ±¾Ë®Æ½¶ÔÆë;
-using cflw::Í¼ĞÎ::d2d::EÎÄ±¾´¹Ö±¶ÔÆë;
-using cflw::Í¼ĞÎ::d2d::CÖĞÎÄ×ÖºÅ¸ñÊ½;
+ï»¿#pragma once
+#include <cflwå›¾å½¢_d2d.h>
+#include "ç”¨æˆ·ç•Œé¢_æ¥å£.h"
+namespace ç”¨æˆ·ç•Œé¢::æ¥å£å®ç° {
+namespace äºŒç»´ = cflw::å›¾å½¢::d2d;
+using cflw::å›¾å½¢::d2d::Eæ–‡æœ¬æ°´å¹³å¯¹é½;
+using cflw::å›¾å½¢::d2d::Eæ–‡æœ¬å‚ç›´å¯¹é½;
+using cflw::å›¾å½¢::d2d::Cä¸­æ–‡å­—å·æ ¼å¼;
 //==============================================================================
-// »­½çÃæ
+// ç”»ç•Œé¢
 //==============================================================================
-class C»­½çÃæ : public I»­½çÃæ {
+class Cç”»ç•Œé¢ : public Iç”»ç•Œé¢ {
 public:
-	void f³õÊ¼»¯(¶şÎ¬::C¶şÎ¬ &);
-	void f»æÖÆÔ²ĞÎ(const t¾ØĞÎ &, const tÑÕÉ« &) override;
-	void f»æÖÆ¾ØĞÎ(const t¾ØĞÎ &, const tÑÕÉ« &) override;
-	void f»æÖÆÎÄ±¾(const std::wstring &, const t¾ØĞÎ &, const tÑÕÉ« &, const SÎÄ±¾¸ñÊ½ &) override;
-	void fÌî³ä¾ØĞÎ(const t¾ØĞÎ &, const tÑÕÉ« &) override;
-	void fÌî³äÔ²ĞÎ(const t¾ØĞÎ &, const tÑÕÉ« &) override;
-	static EÎÄ±¾Ë®Æ½¶ÔÆë ftË®Æ½¶ÔÆë(E¶ÔÆë);
-	static EÎÄ±¾´¹Ö±¶ÔÆë ft´¹Ö±¶ÔÆë(E¶ÔÆë);
+	void fåˆå§‹åŒ–(äºŒç»´::CäºŒç»´ &);
+	void fç»˜åˆ¶åœ†å½¢(const tçŸ©å½¢ &, const té¢œè‰² &) override;
+	void fç»˜åˆ¶çŸ©å½¢(const tçŸ©å½¢ &, const té¢œè‰² &) override;
+	void fç»˜åˆ¶æ–‡æœ¬(const std::wstring_view &, const tçŸ©å½¢ &, const té¢œè‰² &, const Sæ–‡æœ¬æ ¼å¼ &) override;
+	void få¡«å……çŸ©å½¢(const tçŸ©å½¢ &, const té¢œè‰² &) override;
+	void få¡«å……åœ†å½¢(const tçŸ©å½¢ &, const té¢œè‰² &) override;
+	static Eæ–‡æœ¬æ°´å¹³å¯¹é½ ftæ°´å¹³å¯¹é½(Eå¯¹é½);
+	static Eæ–‡æœ¬å‚ç›´å¯¹é½ ftå‚ç›´å¯¹é½(Eå¯¹é½);
 private:
-	IDWriteTextFormat *fg¸ñÊ½(const SÎÄ±¾¸ñÊ½ &);
-	¶şÎ¬::SÎÄ±¾¸ñÊ½²ÎÊı fÎÄ±¾¸ñÊ½²ÎÊı(const SÎÄ±¾¸ñÊ½ &);
-	std::shared_ptr<¶şÎ¬::C»­Í¼ĞÎ> m»­Í¼ĞÎ;
-	std::shared_ptr<¶şÎ¬::C»­ÎÄ±¾> m»­ÎÄ±¾;
-	¶şÎ¬::CÎÄ±¾¹¤³§ mÎÄ±¾¹¤³§;
+	IDWriteTextFormat *fgæ ¼å¼(const Sæ–‡æœ¬æ ¼å¼ &);
+	äºŒç»´::Sæ–‡æœ¬æ ¼å¼å‚æ•° fæ–‡æœ¬æ ¼å¼å‚æ•°(const Sæ–‡æœ¬æ ¼å¼ &);
+	std::shared_ptr<äºŒç»´::Cç”»å›¾å½¢> mç”»å›¾å½¢;
+	std::shared_ptr<äºŒç»´::Cç”»æ–‡æœ¬> mç”»æ–‡æœ¬;
+	äºŒç»´::Cæ–‡æœ¬å·¥å‚ mæ–‡æœ¬å·¥å‚;
 };
 }

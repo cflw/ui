@@ -56,6 +56,7 @@ void W选项卡组::f响应_初始化() {
 void W选项卡组::f动作_添加页(W窗口 &a页, const std::wstring_view &a标签) {
 	S页 v页;
 	v页.m窗口 = &a页;
+	a页.f属性_s布局({t向量2::c零, m尺寸});
 	const int v位置 = ma页.size();
 	v页.m按钮 = std::make_unique<W页按钮>(v位置);
 	v页.m按钮->f属性_s文本(a标签, m文本大小, E对齐::e居中);

@@ -40,6 +40,9 @@ void C用户界面::fs时钟频率(float a计算, float a渲染) {
 void C用户界面::fs主题(const S主题 &a) {
 	m主题 = a;
 }
+void C用户界面::fs音频(I音频设备 &a) {
+	m音频 = &a;
+}
 void C用户界面::f输入_s键盘接口(I输入设备 &a键盘) {
 	m键盘 = &a键盘;
 }
@@ -79,6 +82,7 @@ void C用户界面::f计算() {
 				v参数.x = 数学::f取符号<bool>(vi右);
 			}
 			m按键焦点->f响应_方向键(v参数);
+			f播放音效(E声音::e方向键切换按键焦点);
 		}
 	};
 	const auto f计算功能键 = [this](I输入设备 &a设备, E按键来源 a来源) {
@@ -489,5 +493,10 @@ t向量2 C用户界面::fg指针相对坐标(const W窗口 &a窗口) const {
 }
 bool C用户界面::fi鼠标焦点按下() const {
 	return m鼠标焦点 && m鼠标焦点->m标志[W窗口::e鼠标按下];
+}
+void C用户界面::f播放音效(E声音 a声音) {
+	if (m音频) {
+		m音频->f播放音效({a声音});
+	}
 }
 }

@@ -204,6 +204,7 @@
     <ClCompile Include="用户界面接口实现_画界面.cpp" />
     <ClCompile Include="用户界面接口实现_输入w.cpp" />
     <ClCompile Include="用户界面接口实现_输入x.cpp" />
+    <ClCompile Include="用户界面接口实现_音频x.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="用户界面.h" />
@@ -217,6 +218,7 @@
     <ClInclude Include="用户界面接口实现_画界面.h" />
     <ClInclude Include="用户界面接口实现_输入w.h" />
     <ClInclude Include="用户界面接口实现_输入x.h" />
+    <ClInclude Include="用户界面接口实现_音频x.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cflw代码库\cflw代码库.vcxproj">

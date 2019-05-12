@@ -162,11 +162,11 @@ void W文本框::f响应_字符(const std::vector<wchar_t> &aa字符) {
 	}
 }
 void W文本框::f属性_s布局(const S布局参数 &a参数) {
-	t向量2 v尺寸 = a参数.m尺寸;
-	if (v尺寸.y < c最小高度) {
-		v尺寸.y = c最小高度;
+	m尺寸 = a参数.m尺寸;
+	if (m尺寸.y < c最小高度) {
+		m尺寸.y = c最小高度;
 	}
-	const float v行数 = floor(v尺寸.y / c行高度);
+	const float v行数 = floor(m尺寸.y / c行高度);
 	if (v行数 > 1) {
 		f属性_s多行(true);
 	}

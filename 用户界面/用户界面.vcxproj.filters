@@ -53,6 +53,9 @@
     <ClCompile Include="用户界面_控件_横向选择列表.cpp">
       <Filter>控件</Filter>
     </ClCompile>
+    <ClCompile Include="用户界面接口实现_音频x.cpp">
+      <Filter>接口实现</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="用户界面.h">
@@ -87,6 +90,9 @@
     </ClInclude>
     <ClInclude Include="用户界面_控件.h">
       <Filter>控件</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面接口实现_音频x.h">
+      <Filter>接口实现</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

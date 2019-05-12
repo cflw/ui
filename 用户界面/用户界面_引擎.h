@@ -1,83 +1,86 @@
-#pragma once
+ï»¿#pragma once
 #include <unordered_map>
-#include "ÓÃ»§½çÃæ_Í·.h"
-#include "ÓÃ»§½çÃæ_»ù´¡.h"
-#include "ÓÃ»§½çÃæ_½Ó¿Ú.h"
-namespace ÓÃ»§½çÃæ {
+#include "ç”¨æˆ·ç•Œé¢_å¤´.h"
+#include "ç”¨æˆ·ç•Œé¢_åŸºç¡€.h"
+#include "ç”¨æˆ·ç•Œé¢_æŽ¥å£.h"
+namespace ç”¨æˆ·ç•Œé¢ {
 //==============================================================================
-// ÓÃ»§½çÃæ
+// ç”¨æˆ·ç•Œé¢
 //==============================================================================
-class CÓÃ»§½çÃæ {
+class Cç”¨æˆ·ç•Œé¢ {
 public:
-	static CÓÃ»§½çÃæ *gÕâ;
-	struct S»î¶¯ÐÅÏ¢ {
-		W´°¿Ú *m½¹µã;	//¸Ã»î¶¯´°¿ÚÏÂµÄ½¹µã´°¿Ú
+	static Cç”¨æˆ·ç•Œé¢ *gè¿™;
+	struct Sæ´»åŠ¨ä¿¡æ¯ {
+		Wçª—å£ *mç„¦ç‚¹;	//è¯¥æ´»åŠ¨çª—å£ä¸‹çš„ç„¦ç‚¹çª—å£
 	};
-	struct S·½Ïò¼ü±äÁ¿ {
-		ÊäÈë::C°´×¡ÖØ¸´ mÖØ¸´;
-		ÊäÈë::C»¥³â¼ü mÉÏÏÂ, m×óÓÒ, mËÄÏò;
+	struct Sæ–¹å‘é”®å˜é‡ {
+		è¾“å…¥::CæŒ‰ä½é‡å¤ mé‡å¤;
+		è¾“å…¥::Cäº’æ–¥é”® mä¸Šä¸‹, må·¦å³, må››å‘;
 	};
-	static constexpr float cÖ¡Ãë = 1.f / 60.f;
+	static constexpr float cå¸§ç§’ = 1.f / 60.f;
 public:
-	CÓÃ»§½çÃæ();
-	~CÓÃ»§½çÃæ();
-	void f³õÊ¼»¯();
-	void fs»­½çÃæ(I»­½çÃæ &);
-	void fsÊ±ÖÓÆµÂÊ(float ¼ÆËãÃë, float äÖÈ¾Ãë);	//Ó°ÏìÊ±¼äµÄ¼ÆËã
-	void fsÖ÷Ìâ(const SÖ÷Ìâ &);
-	void fÊäÈë_s¼üÅÌ½Ó¿Ú(IÊäÈëÉè±¸ &);
-	void fÊäÈë_sÊó±ê½Ó¿Ú(IÊäÈëÉè±¸ &);
-	void fÊäÈë_sÊÖ±ú½Ó¿Ú(IÊäÈëÉè±¸ &);
-	void fÊäÈë_s´¥Ãþ½Ó¿Ú(IÊäÈëÉè±¸ &);
-	void fÊäÈë_½ÓÊÕ×Ö·û(wchar_t);//ÔÚ´°¿Ú¹ý³ÌWM_CHARÏûÏ¢ÖÐµ÷ÓÃ
-	void f¼ÆËã();
-	void f¸üÐÂ();
-	void fÏÔÊ¾();
-	void f¸ú×Ù´¦Àí(W´°¿Ú &);
-	void fÐÂ½¨´°¿Ú_(W´°¿Ú &);
-	void fÐÂ½¨´°¿Ú(W´°¿Ú &);
-	void fÐÂ½¨´°¿Ú(W´°¿Ú &¸¸, W´°¿Ú &×Ó);
-	void fÉ¾³ý´°¿Ú(W´°¿Ú &);
-	void fÉ¾³ýËùÓÐ×Ó´°¿Ú(W´°¿Ú &¸¸);
-	void fÇÐ»»´°¿Ú(W´°¿Ú &);
-	void f±éÀúËùÓÐ´°¿Ú(const std::function<void(W´°¿Ú&)> &);
-	void f±éÀú×Ó´°¿Ú(W´°¿Ú *, const std::function<void(W´°¿Ú&)> &);	//Èç¹û´°¿ÚÎª¿Õ,Ôò±éÀú¶¥²ã´°¿Ú
-	void fÉèÖÃ½¹µã´°¿Ú(W´°¿Ú &);
-	void fÉèÖÃ°´¼ü½¹µã´°¿Ú(W´°¿Ú &);
-	void fÉèÖÃÊó±ê½¹µã´°¿Ú(W´°¿Ú &);
-	void fÉèÖÃÈõ°´¼ü½¹µã´°¿Ú(W´°¿Ú &);	//²»»á¸Ä±äÊó±ê½¹µã
-	void fÉèÖÃ»î¶¯´°¿Ú(W´°¿Ú &);	//ÒªÇÐ»»´°¿Ú¡¢½øÈë×Ó´°¿Ú£¬µ÷ÓÃÕâ¸ö
-	void fÇå³ý»î¶¯´°¿Ú();
-	void fÉèÖÃÆ½ÒÆ½¹µã´°¿Ú(W´°¿Ú &);
-	void fÇå³ýÆ½ÒÆ½¹µã´°¿Ú();
-	void f´°¿Ú±íÅÅÐò();	//´¦Àí¸ÕÐÂ½¨µÄ´°¿ÚºÍÒªÉ¾³ýµÄ´°¿Ú
-	float fg¼ÆËãÃë() const;
-	float fgäÖÈ¾Ãë() const;
-	tÏòÁ¿2 fgÖ¸ÕëÏà¶Ô×ø±ê(const W´°¿Ú &) const;
-	bool fiÊó±ê½¹µã°´ÏÂ() const;
+	Cç”¨æˆ·ç•Œé¢();
+	~Cç”¨æˆ·ç•Œé¢();
+	void fåˆå§‹åŒ–();
+	void fsç”»ç•Œé¢(Iç”»ç•Œé¢ &);
+	void fsæ—¶é’Ÿé¢‘çŽ‡(float è®¡ç®—ç§’, float æ¸²æŸ“ç§’);	//å½±å“æ—¶é—´çš„è®¡ç®—
+	void fsä¸»é¢˜(const Sä¸»é¢˜ &);
+	void fséŸ³é¢‘(IéŸ³é¢‘è®¾å¤‡ &);
+	void fè¾“å…¥_sé”®ç›˜æŽ¥å£(Iè¾“å…¥è®¾å¤‡ &);
+	void fè¾“å…¥_sé¼ æ ‡æŽ¥å£(Iè¾“å…¥è®¾å¤‡ &);
+	void fè¾“å…¥_sæ‰‹æŸ„æŽ¥å£(Iè¾“å…¥è®¾å¤‡ &);
+	void fè¾“å…¥_sè§¦æ‘¸æŽ¥å£(Iè¾“å…¥è®¾å¤‡ &);
+	void fè¾“å…¥_æŽ¥æ”¶å­—ç¬¦(wchar_t);//åœ¨çª—å£è¿‡ç¨‹WM_CHARæ¶ˆæ¯ä¸­è°ƒç”¨
+	void fè®¡ç®—();
+	void fæ›´æ–°();
+	void fæ˜¾ç¤º();
+	void fè·Ÿè¸ªå¤„ç†(Wçª—å£ &);
+	void fæ–°å»ºçª—å£_(Wçª—å£ &);
+	void fæ–°å»ºçª—å£(Wçª—å£ &);
+	void fæ–°å»ºçª—å£(Wçª—å£ &çˆ¶, Wçª—å£ &å­);
+	void fåˆ é™¤çª—å£(Wçª—å£ &);
+	void fåˆ é™¤æ‰€æœ‰å­çª—å£(Wçª—å£ &çˆ¶);
+	void fåˆ‡æ¢çª—å£(Wçª—å£ &);
+	void féåŽ†æ‰€æœ‰çª—å£(const std::function<void(Wçª—å£&)> &);
+	void féåŽ†å­çª—å£(Wçª—å£ *, const std::function<void(Wçª—å£&)> &);	//å¦‚æžœçª—å£ä¸ºç©º,åˆ™éåŽ†é¡¶å±‚çª—å£
+	void fè®¾ç½®ç„¦ç‚¹çª—å£(Wçª—å£ &);
+	void fè®¾ç½®æŒ‰é”®ç„¦ç‚¹çª—å£(Wçª—å£ &);
+	void fè®¾ç½®é¼ æ ‡ç„¦ç‚¹çª—å£(Wçª—å£ &);
+	void fè®¾ç½®å¼±æŒ‰é”®ç„¦ç‚¹çª—å£(Wçª—å£ &);	//ä¸ä¼šæ”¹å˜é¼ æ ‡ç„¦ç‚¹
+	void fè®¾ç½®æ´»åŠ¨çª—å£(Wçª—å£ &);	//è¦åˆ‡æ¢çª—å£ã€è¿›å…¥å­çª—å£ï¼Œè°ƒç”¨è¿™ä¸ª
+	void fæ¸…é™¤æ´»åŠ¨çª—å£();
+	void fè®¾ç½®å¹³ç§»ç„¦ç‚¹çª—å£(Wçª—å£ &);
+	void fæ¸…é™¤å¹³ç§»ç„¦ç‚¹çª—å£();
+	void fçª—å£è¡¨æŽ’åº();	//å¤„ç†åˆšæ–°å»ºçš„çª—å£å’Œè¦åˆ é™¤çš„çª—å£
+	float fgè®¡ç®—ç§’() const;
+	float fgæ¸²æŸ“ç§’() const;
+	tå‘é‡2 fgæŒ‡é’ˆç›¸å¯¹åæ ‡(const Wçª—å£ &) const;
+	bool fié¼ æ ‡ç„¦ç‚¹æŒ‰ä¸‹() const;
+	void fæ’­æ”¾éŸ³æ•ˆ(Eå£°éŸ³);
 public:
-	std::vector<W´°¿Ú*> ma´°¿Ú±í;
-	std::vector<W´°¿Ú*> maÐÂ½¨´°¿Ú;	//ÐÂ½¨µÄ´°¿ÚÏÈ·ÅÕâ,ÏÂ´Î¼ÆËãÔÙ·Åµ½´°¿Ú±í
-	std::stack<W´°¿Ú*> mµ÷ÓÃÕ»;
-	std::map<W´°¿Ú*, S»î¶¯ÐÅÏ¢> ma»î¶¯´°¿Ú;
-	std::vector<wchar_t> ma×Ö·û;
-	W´°¿Ú *m´¦Àí´°¿Ú = nullptr;
-	W´°¿Ú *m°´¼ü½¹µã = nullptr;
-	W´°¿Ú *mÊó±ê½¹µã = nullptr;
-	W´°¿Ú *mÆ½ÒÆ½¹µã = nullptr;
-	W´°¿Ú *m»î¶¯´°¿Ú = nullptr;
-	float m¼ÆËãÃë = cÖ¡Ãë, mäÖÈ¾Ãë = cÖ¡Ãë;
-	S·½Ïò¼ü±äÁ¿ m¼üÅÌ·½Ïò¼ü±äÁ¿, mÊÖ±ú·½Ïò¼ü±äÁ¿;
-	I»­½çÃæ *m»­½çÃæ = nullptr;
-	SÖ÷Ìâ mÖ÷Ìâ = SÖ÷Ìâ::c°×;
-	IÊäÈëÉè±¸ *m¼üÅÌ = nullptr;
-	IÊäÈëÉè±¸ *mÊó±ê = nullptr;
-	IÊäÈëÉè±¸ *mÊÖ±ú = nullptr;
-	IÊäÈëÉè±¸ *m´¥Ãþ = nullptr;
-	tÏòÁ¿2 mÊó±ê×ø±ê, m´¥Ãþ×ø±ê;
-	E°´¼ü mÊó±ê°´¼ü = E°´¼ü::eÎÞ;
-	bool m´°¿Ú±í±ä»¯ = false;
-	bool m´¥Ãþ°´ÏÂ = false;
-	int m×Ü±àºÅ = 0;
+	std::vector<Wçª—å£*> maçª—å£è¡¨;
+	std::vector<Wçª—å£*> maæ–°å»ºçª—å£;	//æ–°å»ºçš„çª—å£å…ˆæ”¾è¿™,ä¸‹æ¬¡è®¡ç®—å†æ”¾åˆ°çª—å£è¡¨
+	std::stack<Wçª—å£*> mè°ƒç”¨æ ˆ;
+	std::map<Wçª—å£*, Sæ´»åŠ¨ä¿¡æ¯> maæ´»åŠ¨çª—å£;
+	std::vector<wchar_t> maå­—ç¬¦;
+	Wçª—å£ *må¤„ç†çª—å£ = nullptr;
+	Wçª—å£ *mæŒ‰é”®ç„¦ç‚¹ = nullptr;
+	Wçª—å£ *mé¼ æ ‡ç„¦ç‚¹ = nullptr;
+	Wçª—å£ *må¹³ç§»ç„¦ç‚¹ = nullptr;
+	Wçª—å£ *mæ´»åŠ¨çª—å£ = nullptr;
+	float mè®¡ç®—ç§’ = cå¸§ç§’, mæ¸²æŸ“ç§’ = cå¸§ç§’;
+	Sæ–¹å‘é”®å˜é‡ mé”®ç›˜æ–¹å‘é”®å˜é‡, mæ‰‹æŸ„æ–¹å‘é”®å˜é‡;
+	Iç”»ç•Œé¢ *mç”»ç•Œé¢ = nullptr;
+	Sä¸»é¢˜ mä¸»é¢˜ = Sä¸»é¢˜::cç™½;
+	IéŸ³é¢‘è®¾å¤‡ *méŸ³é¢‘ = nullptr;
+	Iè¾“å…¥è®¾å¤‡ *mé”®ç›˜ = nullptr;
+	Iè¾“å…¥è®¾å¤‡ *mé¼ æ ‡ = nullptr;
+	Iè¾“å…¥è®¾å¤‡ *mæ‰‹æŸ„ = nullptr;
+	Iè¾“å…¥è®¾å¤‡ *mè§¦æ‘¸ = nullptr;
+	tå‘é‡2 mé¼ æ ‡åæ ‡, mè§¦æ‘¸åæ ‡;
+	EæŒ‰é”® mé¼ æ ‡æŒ‰é”® = EæŒ‰é”®::eæ— ;
+	bool mçª—å£è¡¨å˜åŒ– = false;
+	bool mè§¦æ‘¸æŒ‰ä¸‹ = false;
+	int mæ€»ç¼–å· = 0;
 };
-}	//namespace ÓÃ»§½çÃæ
+}	//namespace ç”¨æˆ·ç•Œé¢
