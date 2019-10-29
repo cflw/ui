@@ -1,39 +1,39 @@
-#pragma once
+ï»¿#pragma once
 #include <array>
 #include <functional>
 #include <vector>
 #include <stack>
 #include <bitset>
 #include <string>
-#include <cflw¸¨Öú.h>
-#include <cflwÊ±¼ä.h>
-#include <cflwÊıÑ§.h>
-#include <cflwÊıÑ§_ÏòÁ¿.h>
-#include <cflwÊıÑ§_Í¼ĞÎ.h>
-#include <cflwÊıÑ§_Æ½Ãæ¼¸ºÎ.h>
-#include <cflw¹¤¾ß.h>
-#include <cflwÊäÈë.h>
-namespace ÓÃ»§½çÃæ {
-//ÉùÃ÷
-namespace Ê±¼ä = cflw::Ê±¼ä;
-namespace ÊäÈë = cflw::ÊäÈë;
-namespace ÊıÑ§ = cflw::ÊıÑ§;
-namespace ¹¤¾ß = cflw::¹¤¾ß;
-//using ¶şÎ¬::CÎÄ±¾¸ñÊ½¼ÆËã;
-//using ¶şÎ¬::CÖĞÎÄ×ÖºÅ±í;
-using cflw::Ê±¼ä::CÊ±¼ä¼ä¸ô;
-typedef std::bitset<32> t±êÖ¾;
-using cflw::ÊäÈë::S°´¼ü;
-typedef cflw::ÊıÑ§::SÏòÁ¿2 tÏòÁ¿2;
-typedef cflw::ÊıÑ§::SÑÕÉ« tÑÕÉ«;
-typedef cflw::ÊıÑ§::S¾ØĞÎ t¾ØĞÎ;
-class CÓÃ»§½çÃæ;
-class W´°¿Ú;
-struct SÖ÷Ìâ;
-class CÇĞ»»¶¯»­;
-class C»­½çÃæ;
-struct S²¼¾Ö²ÎÊı;
+#include <cflwè¾…åŠ©.h>
+#include <cflwæ—¶é—´.h>
+#include <cflwæ•°å­¦.h>
+#include <cflwæ•°å­¦_å‘é‡.h>
+#include <cflwæ•°å­¦_å›¾å½¢.h>
+#include <cflwæ•°å­¦_å¹³é¢å‡ ä½•.h>
+#include <cflwå·¥å…·.h>
+#include <cflwè¾“å…¥.h>
+namespace ç”¨æˆ·ç•Œé¢ {
+//å£°æ˜
+namespace æ—¶é—´ = cflw::æ—¶é—´;
+namespace è¾“å…¥ = cflw::è¾“å…¥;
+namespace æ•°å­¦ = cflw::æ•°å­¦;
+namespace å·¥å…· = cflw::å·¥å…·;
+//using äºŒç»´::Cæ–‡æœ¬æ ¼å¼è®¡ç®—;
+//using äºŒç»´::Cä¸­æ–‡å­—å·è¡¨;
+using cflw::æ—¶é—´::Cæ—¶é—´é—´éš”;
+typedef std::bitset<32> tæ ‡å¿—;
+using cflw::è¾“å…¥::SæŒ‰é”®;
+typedef cflw::æ•°å­¦::Så‘é‡2 tå‘é‡2;
+typedef cflw::æ•°å­¦::Sé¢œè‰² té¢œè‰²;
+typedef cflw::æ•°å­¦::SçŸ©å½¢ tçŸ©å½¢;
+class Cç”¨æˆ·ç•Œé¢;
+class Wçª—å£;
+struct Sä¸»é¢˜;
+class Cåˆ‡æ¢åŠ¨ç”»;
+class Cç”»ç•Œé¢;
+struct Så¸ƒå±€å‚æ•°;
 //
-const float cÇĞ»»ËÙ¶È = 2;
+const float cåˆ‡æ¢é€Ÿåº¦ = 2;
 
 }

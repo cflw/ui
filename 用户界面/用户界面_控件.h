@@ -377,8 +377,10 @@ public:
 	S布局参数 f属性_g页按钮布局(int 序号) const;
 	void f属性_s文本大小(float);
 	void f重置页按钮布局();
+	void f隐藏页(int 序号);
+	void f显示页(int 序号);
 	std::vector<S页> ma页;
-	int m页序号 = -1;
+	int m页序号 = 0;
 	float m文本大小 = c文本大小;
 	t向量2 m页按钮尺寸{c页按钮宽, c页按钮高};
 };

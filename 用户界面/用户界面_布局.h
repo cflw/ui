@@ -63,7 +63,9 @@ class C表格排行布局 {
 public:
 	void f属性_s行布局(const t向量2 &坐标, const t向量2 &父尺寸, float 子高度);
 	void f属性_s行距(float);
+	S布局参数 f生成(int, float y偏移 = 0) const;
 	S布局参数 f移动生成(float y偏移 = 0);
+	C表格排列布局 fc生成排列布局(int, float y偏移 = 0) const;
 	C表格排列布局 fc移动生成排列布局(float y偏移 = 0);
 	t向量2 m坐标{};
 	t向量2 m父尺寸{};

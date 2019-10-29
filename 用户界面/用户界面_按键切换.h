@@ -1,34 +1,34 @@
-#pragma once
-#include "ÓÃ»§½çÃæ_ÒıÇæ.h"
-namespace ÓÃ»§½çÃæ {
-//ÇĞ»»½Ó¿Ú
-class I°´¼üÇĞ»» {
+ï»¿#pragma once
+#include "ç”¨æˆ·ç•Œé¢_å¼•æ“.h"
+namespace ç”¨æˆ·ç•Œé¢ {
+//åˆ‡æ¢æ¥å£
+class IæŒ‰é”®åˆ‡æ¢ {
 public:
-	I°´¼üÇĞ»»(CÓÃ»§½çÃæ &, W´°¿Ú &);
-	virtual void f¸üĞÂ() = 0;	//´°¿Ú±í·¢Éú±ä¶¯Ê±µ÷ÓÃ
-	virtual W´°¿Ú *fÉÏÏÂÇĞ»»(bool aÇ°½ø) = 0;
-	virtual W´°¿Ú *f×óÓÒÇĞ»»(bool aÇ°½ø) = 0;
-	CÓÃ»§½çÃæ *mÒıÇæ = nullptr;	//È¡ĞÅÏ¢ÓÃ
-	W´°¿Ú *m´°¿Ú = nullptr;
+	IæŒ‰é”®åˆ‡æ¢(Cç”¨æˆ·ç•Œé¢ &, Wçª—å£ &);
+	virtual void fæ›´æ–°() = 0;	//çª—å£è¡¨å‘ç”Ÿå˜åŠ¨æ—¶è°ƒç”¨
+	virtual Wçª—å£ *fä¸Šä¸‹åˆ‡æ¢(bool aå‰è¿›) = 0;
+	virtual Wçª—å£ *få·¦å³åˆ‡æ¢(bool aå‰è¿›) = 0;
+	Cç”¨æˆ·ç•Œé¢ *må¼•æ“ = nullptr;	//å–ä¿¡æ¯ç”¨
+	Wçª—å£ *mçª—å£ = nullptr;
 };
-//°´ĞòºÅÇĞ»»
-class C°´¼üÇĞ»»_ĞòºÅ : public I°´¼üÇĞ»» {
+//æŒ‰åºå·åˆ‡æ¢
+class CæŒ‰é”®åˆ‡æ¢_åºå· : public IæŒ‰é”®åˆ‡æ¢ {
 public:
-	using I°´¼üÇĞ»»::I°´¼üÇĞ»»;
-	void f¸üĞÂ() override;
-	W´°¿Ú *fÉÏÏÂÇĞ»»(bool aÇ°½ø) override;
-	W´°¿Ú *f×óÓÒÇĞ»»(bool aÇ°½ø) override;
-	W´°¿Ú *fÇĞ»»(bool aÇ°½ø);
-	std::vector<W´°¿Ú*> ma´°¿Ú;
+	using IæŒ‰é”®åˆ‡æ¢::IæŒ‰é”®åˆ‡æ¢;
+	void fæ›´æ–°() override;
+	Wçª—å£ *fä¸Šä¸‹åˆ‡æ¢(bool aå‰è¿›) override;
+	Wçª—å£ *få·¦å³åˆ‡æ¢(bool aå‰è¿›) override;
+	Wçª—å£ *fåˆ‡æ¢(bool aå‰è¿›);
+	std::vector<Wçª—å£*> maçª—å£;
 };
-//°´×ø±êÇĞ»»
-class C°´¼üÇĞ»»_×ø±ê : public I°´¼üÇĞ»» {
+//æŒ‰åæ ‡åˆ‡æ¢
+class CæŒ‰é”®åˆ‡æ¢_åæ ‡ : public IæŒ‰é”®åˆ‡æ¢ {
 public:
-	using I°´¼üÇĞ»»::I°´¼üÇĞ»»;
-	void f¸üĞÂ() override;
-	W´°¿Ú *fÉÏÏÂÇĞ»»(bool aÇ°½ø) override;
-	W´°¿Ú *f×óÓÒÇĞ»»(bool aÇ°½ø) override;
-	W´°¿Ú *fÇĞ»»(const float tÏòÁ¿2::*Ö÷Ë³Ğò, const float tÏòÁ¿2::*´ÎË³Ğò, const std::function<bool(const float &, const float &)> &Ö÷±È½Ï);
-	std::vector<W´°¿Ú*> ma´°¿Ú;
+	using IæŒ‰é”®åˆ‡æ¢::IæŒ‰é”®åˆ‡æ¢;
+	void fæ›´æ–°() override;
+	Wçª—å£ *fä¸Šä¸‹åˆ‡æ¢(bool aå‰è¿›) override;
+	Wçª—å£ *få·¦å³åˆ‡æ¢(bool aå‰è¿›) override;
+	Wçª—å£ *fåˆ‡æ¢(const float tå‘é‡2::*ä¸»é¡ºåº, const float tå‘é‡2::*æ¬¡é¡ºåº, const std::function<bool(const float &, const float &)> &ä¸»æ¯”è¾ƒ);
+	std::vector<Wçª—å£*> maçª—å£;
 };
 }

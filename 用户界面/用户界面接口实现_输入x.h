@@ -1,14 +1,14 @@
-#pragma once
-#include <cflwÊäÈë_xi.h>
-#include "ÓÃ»§½çÃæ_½Ó¿Ú.h"
-namespace ÓÃ»§½çÃæ::½Ó¿ÚÊµÏÖ {
-namespace ÊäÈëx = cflw::ÊäÈë::xi;
-class CÊÖ±úx : public IÊäÈëÉè±¸ {
+ï»¿#pragma once
+#include <cflwè¾“å…¥_xi.h>
+#include "ç”¨æˆ·ç•Œé¢_æ¥å£.h"
+namespace ç”¨æˆ·ç•Œé¢::æ¥å£å®ç° {
+namespace è¾“å…¥x = cflw::è¾“å…¥::xi;
+class Cæ‰‹æŸ„x : public Iè¾“å…¥è®¾å¤‡ {
 public:
-	void f³õÊ¼»¯(ÊäÈëx::IÊÖ±ú &);
-	void f¸üĞÂ();
-	ÊäÈë::S°´¼ü f°´¼ü(E°´¼ü) const override;
-	ÊäÈëx::IÊÖ±ú *mÊÖ±ú = nullptr;
-	ÊäÈëx::C°´¼üÓ³Éä mÓ³Éä;
+	void fåˆå§‹åŒ–(è¾“å…¥x::Iæ‰‹æŸ„ &);
+	void fæ›´æ–°();
+	è¾“å…¥::SæŒ‰é”® fæŒ‰é”®(EæŒ‰é”®) const override;
+	è¾“å…¥x::Iæ‰‹æŸ„ *mæ‰‹æŸ„ = nullptr;
+	è¾“å…¥x::CæŒ‰é”®æ˜ å°„ mæ˜ å°„;
 };
 }

@@ -181,6 +181,16 @@ void C表格排行布局::f属性_s行距(float a行距) {
 	m行距 = a行距;
 	m上 -= a行距 * 0.5f;
 }
+S布局参数 C表格排行布局::f生成(int a行, float ay偏移) const {
+	S布局参数 v;
+	const float v上 = m上 - m子高度 * a行;
+	const float v下 = v上 - m子高度;
+	v.m坐标.x = m坐标.x;
+	v.m坐标.y = (v上 + v下) * 0.5f + ay偏移;
+	v.m尺寸.x = m父尺寸.x;
+	v.m尺寸.y = m子高度;
+	return v;
+}
 S布局参数 C表格排行布局::f移动生成(float ay偏移) {
 	S布局参数 v;
 	const float v下 = m上 - m子高度;
@@ -190,6 +200,12 @@ S布局参数 C表格排行布局::f移动生成(float ay偏移) {
 	v.m尺寸.y = m子高度;
 	m上 = v下;
 	return v;
+}
+C表格排列布局 C表格排行布局::fc生成排列布局(int a行, float ay偏移) const {
+	const S布局参数 v参数 = f生成(a行, ay偏移);
+	C表格排列布局 v布局;
+	v布局.f属性_s列布局(v参数.m坐标, v参数.m尺寸);
+	return v布局;
 }
 C表格排列布局 C表格排行布局::fc移动生成排列布局(float ay偏移) {
 	const S布局参数 v参数 = f移动生成(ay偏移);

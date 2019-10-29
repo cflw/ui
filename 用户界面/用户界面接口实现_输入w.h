@@ -1,33 +1,33 @@
-#pragma once
-#include <cflwÊäÈë_win.h>
-#include "ÓÃ»§½çÃæ_½Ó¿Ú.h"
-namespace ÓÃ»§½çÃæ::½Ó¿ÚÊµÏÖ {
-namespace ÊäÈëw = cflw::ÊäÈë::win;
-class C¼üÅÌw : public IÊäÈëÉè±¸ {
+ï»¿#pragma once
+#include <cflwè¾“å…¥_win.h>
+#include "ç”¨æˆ·ç•Œé¢_æ¥å£.h"
+namespace ç”¨æˆ·ç•Œé¢::æ¥å£å®ç° {
+namespace è¾“å…¥w = cflw::è¾“å…¥::win;
+class Cé”®ç›˜w : public Iè¾“å…¥è®¾å¤‡ {
 public:
-	void f³õÊ¼»¯(ÊäÈëw::I¼üÅÌ &);
-	void f¸üĞÂ();
-	ÊäÈë::S°´¼ü f°´¼ü(E°´¼ü) const override;
-	ÊäÈëw::I¼üÅÌ *m¼üÅÌ = nullptr;
-	ÊäÈëw::C°´¼üÓ³Éä mÓ³Éä;
+	void fåˆå§‹åŒ–(è¾“å…¥w::Ié”®ç›˜ &);
+	void fæ›´æ–°();
+	è¾“å…¥::SæŒ‰é”® fæŒ‰é”®(EæŒ‰é”®) const override;
+	è¾“å…¥w::Ié”®ç›˜ *mé”®ç›˜ = nullptr;
+	è¾“å…¥w::CæŒ‰é”®æ˜ å°„ mæ˜ å°„;
 };
-class CÊó±êw : public IÊäÈëÉè±¸ {
+class Cé¼ æ ‡w : public Iè¾“å…¥è®¾å¤‡ {
 public:
-	void f³õÊ¼»¯(ÊäÈëw::IÊó±ê &);
-	void f¸üĞÂ();
-	ÊäÈë::S°´¼ü f°´¼ü(E°´¼ü) const override;
-	tÏòÁ¿2 f×ø±ê() const override;
-	ÊäÈëw::IÊó±ê *mÊó±ê = nullptr;
-	ÊäÈëw::C°´¼üÓ³Éä mÓ³Éä;
+	void fåˆå§‹åŒ–(è¾“å…¥w::Ié¼ æ ‡ &);
+	void fæ›´æ–°();
+	è¾“å…¥::SæŒ‰é”® fæŒ‰é”®(EæŒ‰é”®) const override;
+	tå‘é‡2 fåæ ‡() const override;
+	è¾“å…¥w::Ié¼ æ ‡ *mé¼ æ ‡ = nullptr;
+	è¾“å…¥w::CæŒ‰é”®æ˜ å°„ mæ˜ å°„;
 };
-class C´¥Ãşw : public IÊäÈëÉè±¸ {
+class Cè§¦æ‘¸w : public Iè¾“å…¥è®¾å¤‡ {
 public:
-	void f³õÊ¼»¯(ÊäÈëw::I´¥Ãş &);
-	void f¸üĞÂ();
-	ÊäÈë::S°´¼ü f°´¼ü(E°´¼ü) const override;
-	tÏòÁ¿2 f×ø±ê() const override;
-	ÊäÈëw::I´¥Ãş *m´¥Ãş = nullptr;
-	ÊäÈëw::tp´¥¿Øµã mµã = nullptr;
-	tÏòÁ¿2 m×ø±ê;
+	void fåˆå§‹åŒ–(è¾“å…¥w::Iè§¦æ‘¸ &);
+	void fæ›´æ–°();
+	è¾“å…¥::SæŒ‰é”® fæŒ‰é”®(EæŒ‰é”®) const override;
+	tå‘é‡2 fåæ ‡() const override;
+	è¾“å…¥w::Iè§¦æ‘¸ *mè§¦æ‘¸ = nullptr;
+	è¾“å…¥w::tpè§¦æ§ç‚¹ mç‚¹ = nullptr;
+	tå‘é‡2 måæ ‡;
 };
 }
