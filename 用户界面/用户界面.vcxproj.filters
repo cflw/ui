@@ -29,9 +29,6 @@
     <ClCompile Include="用户界面_布局.cpp">
       <Filter>用户界面</Filter>
     </ClCompile>
-    <ClCompile Include="用户界面接口实现_画界面.cpp">
-      <Filter>接口实现</Filter>
-    </ClCompile>
     <ClCompile Include="用户界面接口实现_输入w.cpp">
       <Filter>接口实现</Filter>
     </ClCompile>
@@ -56,6 +53,12 @@
     <ClCompile Include="用户界面接口实现_音频x.cpp">
       <Filter>接口实现</Filter>
     </ClCompile>
+    <ClCompile Include="用户界面接口实现_图形d2d.cpp">
+      <Filter>接口实现</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_控件_图片.cpp">
+      <Filter>控件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="用户界面.h">
@@ -76,9 +79,6 @@
     <ClInclude Include="用户界面_接口.h">
       <Filter>用户界面</Filter>
     </ClInclude>
-    <ClInclude Include="用户界面接口实现_画界面.h">
-      <Filter>接口实现</Filter>
-    </ClInclude>
     <ClInclude Include="用户界面接口实现_输入w.h">
       <Filter>接口实现</Filter>
     </ClInclude>
@@ -92,6 +92,9 @@
       <Filter>控件</Filter>
     </ClInclude>
     <ClInclude Include="用户界面接口实现_音频x.h">
+      <Filter>接口实现</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面接口实现_图形d2d.h">
       <Filter>接口实现</Filter>
     </ClInclude>
   </ItemGroup>

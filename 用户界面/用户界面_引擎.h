@@ -22,7 +22,7 @@ public:
 	C用户界面();
 	~C用户界面();
 	void f初始化();
-	void fs画界面(I画界面 &);
+	void fs图形(I图形设备 &);
 	void fs时钟频率(float 计算秒, float 渲染秒);	//影响时间的计算
 	void fs主题(const S主题 &);
 	void fs音频(I音频设备 &);
@@ -49,6 +49,7 @@ public:
 	void f设置弱按键焦点窗口(W窗口 &);	//不会改变鼠标焦点
 	void f设置活动窗口(W窗口 &);	//要切换窗口、进入子窗口，调用这个
 	void f清除活动窗口();
+	void f保存活动窗口信息();
 	void f设置平移焦点窗口(W窗口 &);
 	void f清除平移焦点窗口();
 	void f窗口表排序();	//处理刚新建的窗口和要删除的窗口
@@ -70,7 +71,7 @@ public:
 	W窗口 *m活动窗口 = nullptr;
 	float m计算秒 = c帧秒, m渲染秒 = c帧秒;
 	S方向键变量 m键盘方向键变量, m手柄方向键变量;
-	I画界面 *m画界面 = nullptr;
+	I图形设备 *m图形 = nullptr;
 	S主题 m主题 = S主题::c白;
 	I音频设备 *m音频 = nullptr;
 	I输入设备 *m键盘 = nullptr;

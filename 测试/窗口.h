@@ -13,6 +13,7 @@ public:
 		e连击按钮,
 		e滚动条,
 		e文本框,
+		e图片,
 	};
 	W主窗口() = default;
 	void f响应_初始化() override;
@@ -27,12 +28,14 @@ public:
 	用户界面::W连击按钮 w连击按钮{e连击按钮};
 	用户界面::W垂直滚动条 w滚动条{e滚动条};
 	用户界面::W文本框 w文本框{e文本框};
+	用户界面::W图片 w图片{e图片};
 };
 //4x4按钮
 class W窗口1 : public 用户界面::W窗口 {
 public:
 	W窗口1();
 	void f响应_初始化() override;
+	void f事件_按键(用户界面::W窗口 &, const 用户界面::S按键参数 &) override;
 	std::vector<std::unique_ptr<用户界面::W按钮>> ma按钮;
 };
 //一排复选框

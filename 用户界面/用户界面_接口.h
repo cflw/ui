@@ -4,13 +4,18 @@ namespace 用户界面 {
 //==============================================================================
 // 图形接口
 //==============================================================================
-class I画界面 {
+class I图片源 {
 public:
-	virtual void f绘制圆形(const t矩形 &, const t颜色 &) = 0;
-	virtual void f绘制矩形(const t矩形 &, const t颜色 &) = 0;
-	virtual void f绘制文本(const std::wstring_view &, const t矩形 &, const t颜色 &, const S文本格式 &) = 0;
-	virtual void f填充矩形(const t矩形 &, const t颜色 &) = 0;
-	virtual void f填充圆形(const t矩形 &, const t颜色 &) = 0;
+	virtual void f显示(const W窗口 &, const S显示参数 &) const = 0;
+};
+class I图形设备 {
+public:
+	//画
+	virtual void f绘制圆形(const t矩形 &, const t颜色 &) const = 0;
+	virtual void f绘制矩形(const t矩形 &, const t颜色 &) const = 0;
+	virtual void f绘制文本(const std::wstring_view &, const t矩形 &, const t颜色 &, const S文本格式 &) const = 0;
+	virtual void f填充矩形(const t矩形 &, const t颜色 &) const = 0;
+	virtual void f填充圆形(const t矩形 &, const t颜色 &) const = 0;
 };
 //==============================================================================
 // 输入接口
@@ -33,6 +38,6 @@ struct S声音参数 {
 };
 class I音频设备 {
 public:
-	virtual void f播放音效(const S声音参数 &) = 0;
+	virtual void f播放音效(const S声音参数 &) const = 0;
 };
 }	//namespace 用户界面

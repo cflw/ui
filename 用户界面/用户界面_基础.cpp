@@ -274,7 +274,7 @@ void W窗口::f响应_更新() {
 void W窗口::f响应_显示(const S显示参数 &a) const {
 	if constexpr (c调试) {	//如果调试模式显示圆形,检查焦点是否正确,且重写显示
 		const t颜色 v颜色 = a.m主题.fg颜色(1, 1, m焦点渐变.f插值(0, 1));
-		a.m画界面.f绘制圆形(fg动画矩形(), v颜色);
+		a.m图形.f绘制圆形(fg动画矩形(), v颜色);
 	}
 }
 void W窗口::f响应_按键(const S按键参数 &a参数) {
@@ -420,6 +420,9 @@ void W窗口::f按键切换计算(const S方向键参数 &a方向键) {
 		f切换(&I按键切换::f左右切换, &S方向键参数::fi左右, &S方向键参数::fi右)) {
 		return;
 	}
+}
+int W窗口::fg组合标识值() const {
+	return f组合标识值(m标识, m值);
 }
 void W窗口::fs按键切换(E按键切换 a) {
 	if (m按键切换) {

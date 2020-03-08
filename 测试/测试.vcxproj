@@ -174,12 +174,14 @@
   <ItemGroup>
     <ClCompile Include="程序.cpp" />
     <ClCompile Include="窗口.cpp" />
+    <ClCompile Include="资源.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="头.h" />
     <ClInclude Include="常量.h" />
     <ClInclude Include="程序.h" />
     <ClInclude Include="窗口.h" />
+    <ClInclude Include="资源.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\cflw代码库\cflw代码库.vcxproj">

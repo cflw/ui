@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include <cflw输入_win.h>
 #include "用户界面_接口.h"
-namespace 用户界面::接口实现 {
+namespace 用户界面::接口实现::win {
 namespace 输入w = cflw::输入::win;
-class C键盘w : public I输入设备 {
+class C键盘 : public I输入设备 {
 public:
 	void f初始化(输入w::I键盘 &);
 	void f更新();
@@ -11,7 +11,7 @@ public:
 	输入w::I键盘 *m键盘 = nullptr;
 	输入w::C按键映射 m映射;
 };
-class C鼠标w : public I输入设备 {
+class C鼠标 : public I输入设备 {
 public:
 	void f初始化(输入w::I鼠标 &);
 	void f更新();
@@ -20,7 +20,7 @@ public:
 	输入w::I鼠标 *m鼠标 = nullptr;
 	输入w::C按键映射 m映射;
 };
-class C触摸w : public I输入设备 {
+class C触摸 : public I输入设备 {
 public:
 	void f初始化(输入w::I触摸 &);
 	void f更新();

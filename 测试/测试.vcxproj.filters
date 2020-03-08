@@ -17,6 +17,9 @@
     <ClCompile Include="窗口.cpp">
       <Filter>程序</Filter>
     </ClCompile>
+    <ClCompile Include="资源.cpp">
+      <Filter>程序</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="程序.h">
@@ -29,6 +32,9 @@
       <Filter>程序</Filter>
     </ClInclude>
     <ClInclude Include="常量.h">
+      <Filter>程序</Filter>
+    </ClInclude>
+    <ClInclude Include="资源.h">
       <Filter>程序</Filter>
     </ClInclude>
   </ItemGroup>

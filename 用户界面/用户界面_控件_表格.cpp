@@ -207,7 +207,7 @@ void W表格::f响应_显示(const S显示参数 &a) const {
 	const float v切换透明 = m切换.fg透明度();
 	const t颜色 v前景色 = a.m主题.fg颜色(1, 1, m焦点渐变.f插值(0, 0.5f) * v切换透明);
 	if (f标志_i显示边框()) {
-		a.m画界面.f绘制矩形(m焦点动画矩形, v前景色);
+		a.m图形.f绘制矩形(m焦点动画矩形, v前景色);
 	}
 }
 void W表格::f响应_垂直平移(const S平移参数 &a) {

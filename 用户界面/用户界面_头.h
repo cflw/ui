@@ -22,18 +22,18 @@ namespace 工具 = cflw::工具;
 //using 二维::C文本格式计算;
 //using 二维::C中文字号表;
 using cflw::时间::C时间间隔;
-typedef std::bitset<32> t标志;
+using t标志 = std::bitset<32>;
 using cflw::输入::S按键;
-typedef cflw::数学::S向量2 t向量2;
-typedef cflw::数学::S颜色 t颜色;
-typedef cflw::数学::S矩形 t矩形;
+using t向量2 = cflw::数学::S向量2;
+using t颜色 = cflw::数学::S颜色;
+using t矩形 = cflw::数学::S矩形;
 class C用户界面;
 class W窗口;
 struct S主题;
 class C切换动画;
-class C画界面;
 struct S布局参数;
 //
-const float c切换速度 = 2;
+constexpr float c切换时间 = 0.5f;	//多少秒切换完毕
+constexpr float c切换速度 = 1 / c切换时间;
 
 }

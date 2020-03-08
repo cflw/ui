@@ -43,6 +43,17 @@ public:
 	void f属性_s透明度(float);
 	float m透明度 = 1;
 };
+//图片
+class I图片源;
+class W图片 : public W窗口 {
+public:
+	W图片(int = -1, int = 0);
+	void f响应_显示(const S显示参数 &) const override;
+	void f属性_s图片源(const I图片源 &);
+	void f属性_s透明度(float);
+	float m透明度 = 1;
+	const I图片源 *m图片源 = nullptr;
+};
 //按钮
 class W按钮 : public W空白按钮, public C控件文本 {
 public:
