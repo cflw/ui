@@ -5,6 +5,7 @@ namespace 用户界面 {
 class I按键切换 {
 public:
 	I按键切换(C用户界面 &, W窗口 &);
+	virtual ~I按键切换() = default;
 	virtual void f更新() = 0;	//窗口表发生变动时调用
 	virtual W窗口 *f上下切换(bool a前进) = 0;
 	virtual W窗口 *f左右切换(bool a前进) = 0;
@@ -15,6 +16,7 @@ public:
 class C按键切换_序号 : public I按键切换 {
 public:
 	using I按键切换::I按键切换;
+	~C按键切换_序号() = default;
 	void f更新() override;
 	W窗口 *f上下切换(bool a前进) override;
 	W窗口 *f左右切换(bool a前进) override;
@@ -25,6 +27,7 @@ public:
 class C按键切换_坐标 : public I按键切换 {
 public:
 	using I按键切换::I按键切换;
+	~C按键切换_坐标() = default;
 	void f更新() override;
 	W窗口 *f上下切换(bool a前进) override;
 	W窗口 *f左右切换(bool a前进) override;

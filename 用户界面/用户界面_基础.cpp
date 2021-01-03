@@ -157,7 +157,7 @@ S渐变插值::operator float() const {
 	return m值;
 }
 float S渐变插值::f渐变(bool a) {
-	const float v目标 = a ? 1 : 0;
+	const float v目标 = a ? 1.f : 0.f;
 	m值 = 数学::f线性渐变<float>(m值, v目标, c速度 * C用户界面::g这->fg渲染秒());
 	return m值;
 }
@@ -272,7 +272,7 @@ void W窗口::f响应_更新() {
 	m焦点渐变.f渐变(f状态_i焦点());
 }
 void W窗口::f响应_显示(const S显示参数 &a) const {
-	if constexpr (c调试) {	//如果调试模式显示圆形,检查焦点是否正确,且重写显示
+	if constexpr (c调试) {	//如果调试模式显示出圆形,检查焦点是否正确,然后重写显示
 		const t颜色 v颜色 = a.m主题.fg颜色(1, 1, m焦点渐变.f插值(0, 1));
 		a.m图形.f绘制圆形(fg动画矩形(), v颜色);
 	}

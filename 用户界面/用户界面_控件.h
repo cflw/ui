@@ -22,6 +22,14 @@ public:
 	float m字号 = c字号;
 	E对齐 m对齐 = e居左;
 };
+//专门的窗口容器类,会响应所有鼠标消息(窗口基类只响应部分消息)
+class W窗口框架 : public W窗口 {
+public:
+	W窗口框架(int = -1, int = 0);
+	void f响应_鼠标按下(const S按键参数 &) override;
+	void f响应_鼠标松开(const S按键参数 &) override;
+	bool f响应_i范围内(const t向量2 &) override;
+};
 //不显示,只响应的按钮
 class W空白按钮 : public W窗口 {
 public:
@@ -203,7 +211,7 @@ public:
 //==============================================================================
 // 复杂控件-下拉列表
 //==============================================================================
-class W下拉列表 : public W窗口 {
+class W下拉列表 : public W窗口框架 {
 public:
 	enum E标志 {
 		e下拉 = W窗口::e自定义,
@@ -218,7 +226,6 @@ public:
 	void f事件_按键(W窗口 &, const S按键参数 &) override;
 	void f响应_初始化() override;
 	bool f响应_i范围内(const t向量2 &) override;
-	void f响应_鼠标松开(const S按键参数 &) override;
 	void f响应_方向键(const S方向键参数 &) override;
 	void f属性_s列表(const std::vector<std::wstring> &);
 	std::vector<std::wstring> &f属性_g列表();

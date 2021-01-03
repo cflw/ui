@@ -1,4 +1,4 @@
-#include "资源.h"
+﻿#include "资源.h"
 C图片资源::C图片资源() {
 	g这 = this;
 }

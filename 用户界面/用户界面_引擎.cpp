@@ -1,10 +1,9 @@
-﻿#include <optional>
-#include "用户界面_引擎.h"
+﻿#include "用户界面_引擎.h"
 #include "用户界面_基础.h"
 #include "用户界面_按键切换.h"
 namespace 用户界面 {
 E按键 f刚按下按键(const I输入设备 &a按键) {
-	for (输入::t索引 i = 0; i != (输入::t索引)E按键::e无; ++i) {
+	for (输入::t索引 i = 0; i != (输入::t索引)E按键::c数量; ++i) {
 		const auto &v按键 = a按键.f按键((E按键)i);
 		if (v按键.f刚按下()) {
 			return (E按键)i;
@@ -109,6 +108,7 @@ void C用户界面::f计算() {
 	}
 	//准备鼠标/触摸输入
 	const auto f更新鼠标焦点 = [this](const t向量2 &a坐标) {
+		//鼠标按下时，不能更新鼠标焦点
 		W窗口 *v目标窗口 = nullptr;
 		for (auto &vp窗口 : ma窗口表) {
 			if (!vp窗口->f状态_i可获得鼠标焦点()) {
@@ -116,7 +116,6 @@ void C用户界面::f计算() {
 			}
 			f跟踪处理(*vp窗口);
 			const t向量2 v相对坐标 = a坐标 - vp窗口->f属性_g坐标();
-			auto v按下标志 = vp窗口->m标志[W窗口::e鼠标按下];
 			auto v鼠标范围标志 = vp窗口->m标志[W窗口::e鼠标范围];
 			v鼠标范围标志 = vp窗口->f响应_i范围内(v相对坐标);
 			if (v鼠标范围标志) {
@@ -275,9 +274,7 @@ void C用户界面::f新建窗口_(W窗口 &a窗口) {
 	a窗口.m动画.f默认();
 }
 void C用户界面::f新建窗口(W窗口 &a窗口) {
-	a窗口.m标识 = m总编号;
 	f新建窗口_(a窗口);
-	++m总编号;
 	m窗口表变化 = true;
 	if (m活动窗口 == nullptr) {	//没有活动窗口则自动把新建的窗口设为活动窗口
 		f设置活动窗口(a窗口);
@@ -521,4 +518,4 @@ void C用户界面::f播放音效(E声音 a声音) {
 		m音频->f播放音效({a声音});
 	}
 }
-}
+}	//namespace 用户界面

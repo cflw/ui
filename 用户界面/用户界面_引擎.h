@@ -82,6 +82,5 @@ public:
 	E按键 m鼠标按键 = E按键::e无;
 	bool m窗口表变化 = false;
 	bool m触摸按下 = false;
-	int m总编号 = 0;
 };
 }	//namespace 用户界面

@@ -110,7 +110,7 @@ void W横向选择列表::f右() {
 void W横向选择列表::f切换项(int &(*af变化)(int &)) {
 	int v选择项 = m选择项;
 	af变化(v选择项);
-	v选择项 = 数学::f环绕<int>(v选择项, 0, ma文本.size());
+	v选择项 = 数学::f环绕<int>(v选择项, 0, (int)ma文本.size());
 	if (v选择项 == m选择项) {
 		return;
 	}

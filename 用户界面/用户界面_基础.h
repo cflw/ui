@@ -17,13 +17,15 @@ enum E对齐 {
 	e居下,
 };
 enum class E按键来源 {
+	e无,	//内部产生
 	e键盘,
 	e鼠标,
 	e手柄,
 	e触摸,
-	e无,	//内部产生
+	c数量,
 };
 enum class E按键 {
+	e无,
 	e上,
 	e下,
 	e左,
@@ -32,7 +34,7 @@ enum class E按键 {
 	e取消,
 	e切换,
 	e跳过,
-	e无,
+	c数量,
 };
 enum class E按键切换 {
 	e序号,

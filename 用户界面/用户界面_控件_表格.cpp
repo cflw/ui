@@ -227,7 +227,7 @@ int W表格::f属性_g行上限() const {
 	return m行上限;
 }
 int W表格::f属性_g行数() const {
-	return ma行.size();
+	return (int)ma行.size();
 }
 void W表格::f属性_s标题行(bool a) {
 	m标志[e标题行] = a;
@@ -290,8 +290,8 @@ void W表格::f重置滚动条布局() {
 }
 void W表格::f重置滚动条值() {
 	const int v减标题行 = m标志[e标题行] ? -1 : 0;
-	const int v行数 = ma行.size() + v减标题行;
-	const int v显示容量 = (m尺寸.y / m行属性.m行高) + v减标题行;
+	const int v行数 = (int)ma行.size() + v减标题行;
+	const int v显示容量 = (int)(m尺寸.y / m行属性.m行高) + v减标题行;
 	w垂直滚动条.f属性_s容纳值(v行数, v显示容量);	//由滚动条计算出是否显示,再确定是否可以平移
 	const bool vi垂直平移 = w垂直滚动条.f属性_i使用全部();
 	f标志_s平移(vi垂直平移);

@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "头.h"
 #include "用户界面.h"
-class W主窗口 : public 用户界面::W窗口 {
+class W主窗口 : public 用户界面::W窗口框架 {
 public:
 	enum E控件编号 {
 		e文字 = -1,
@@ -31,7 +31,7 @@ public:
 	用户界面::W图片 w图片{e图片};
 };
 //4x4按钮
-class W窗口1 : public 用户界面::W窗口 {
+class W窗口1 : public 用户界面::W窗口框架 {
 public:
 	W窗口1();
 	void f响应_初始化() override;
@@ -39,7 +39,7 @@ public:
 	std::vector<std::unique_ptr<用户界面::W按钮>> ma按钮;
 };
 //一排复选框
-class W窗口2 : public 用户界面::W窗口 {
+class W窗口2 : public 用户界面::W窗口框架 {
 public:
 	enum E标识 {
 		e标签,
@@ -54,7 +54,7 @@ public:
 	std::vector<用户界面::W复选框> ma复选框;
 };
 //数据表
-class W窗口3 : public 用户界面::W窗口 {
+class W窗口3 : public 用户界面::W窗口框架 {
 public:
 	enum E标识 {
 		e表格,
@@ -72,14 +72,14 @@ public:
 	用户界面::W按钮 w加行{e加行}, w减行{e减行};
 };
 //选项卡
-class W选项卡页 : public 用户界面::W窗口 {
+class W选项卡页 : public 用户界面::W窗口框架 {
 public:
 	W选项卡页();
 	void f响应_初始化() override;
 	void f属性_s布局(const 用户界面::S布局参数 &) override;
 	std::vector<用户界面::W横向选择列表> ma控件;
 };
-class W窗口4 : public 用户界面::W窗口 {
+class W窗口4 : public 用户界面::W窗口框架 {
 public:
 	W窗口4();
 	void f响应_初始化() override;
