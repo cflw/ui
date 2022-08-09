@@ -9,23 +9,35 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="窗口">
+      <UniqueIdentifier>{50f87a8c-618e-454b-807d-df611801f53e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="程序.cpp">
       <Filter>程序</Filter>
     </ClCompile>
-    <ClCompile Include="窗口.cpp">
-      <Filter>程序</Filter>
-    </ClCompile>
     <ClCompile Include="资源.cpp">
       <Filter>程序</Filter>
+    </ClCompile>
+    <ClCompile Include="窗口_表格.ixx">
+      <Filter>窗口</Filter>
+    </ClCompile>
+    <ClCompile Include="窗口_选项卡.ixx">
+      <Filter>窗口</Filter>
+    </ClCompile>
+    <ClCompile Include="窗口_复选框.ixx">
+      <Filter>窗口</Filter>
+    </ClCompile>
+    <ClCompile Include="窗口_按钮.ixx">
+      <Filter>窗口</Filter>
+    </ClCompile>
+    <ClCompile Include="窗口_主窗口.ixx">
+      <Filter>窗口</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="程序.h">
-      <Filter>程序</Filter>
-    </ClInclude>
-    <ClInclude Include="窗口.h">
       <Filter>程序</Filter>
     </ClInclude>
     <ClInclude Include="头.h">

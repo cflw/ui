@@ -15,7 +15,7 @@ void C手柄::f更新() {
 	m映射.m按键.f覆盖上次();
 	m映射.m按键.f清空这次();
 	m映射.f更新(*m手柄);
-	const auto &v方向 = m手柄->f方向((输入::t索引)输入x::E手柄方向::e合并);
+	const auto &v方向 = m手柄->fg方向((输入::t索引)输入x::E手柄方向::e合并);
 	if (abs(v方向.x) > 0.5f) {
 		if (v方向.x > 0) {
 			m映射.m按键.m这次[(输入::t索引)E按键::e右] |= true;
@@ -32,7 +32,6 @@ void C手柄::f更新() {
 	}
 }
 输入::S按键 C手柄::f按键(E按键 a) const {
-	return m映射.m按键.f按键((输入::t索引)a);
+	return m映射.m按键.fg按键((输入::t索引)a);
 }
-
-}
+}	//namespace 用户界面::接口实现::xi

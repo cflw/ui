@@ -30,4 +30,4 @@ public:
 	输入w::tp触控点 m点 = nullptr;
 	t向量2 m坐标;
 };
-}
+}	//namespace 用户界面::接口实现::win

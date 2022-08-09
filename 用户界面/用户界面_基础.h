@@ -65,6 +65,10 @@ struct S主题 {
 };
 class C切换动画 {
 public:
+	static constexpr float c渐入开始 = -1;
+	static constexpr float c渐入结束 = 0;
+	static constexpr float c渐出开始 = 0;
+	static constexpr float c渐出结束 = 1;
 	void f重置(float 延时 = 0);
 	void f计算(bool 结束, float 间隔);
 	bool fi已消失() const;
@@ -168,17 +172,17 @@ class W窗口 {
 public:
 	friend C用户界面;
 	enum E标志 {
-		e使用,
+		e使用,	//管理对象生命周期
 		e销毁,	//不参与计算,刷新窗口表时删除销毁的窗口
 		e加载,
 		e焦点,	//焦点指示
-		e禁用,	//不能做为任何焦点,默认为真
+		e禁用,	//当前窗口不能做为任何焦点,默认为真
 		e鼠标按下,	//鼠标在窗口范围内按下,在响应中处理
 		e按键按下,
 		e选中,	//单选框/复选框的选中
 		//e纯鼠标,	//只能获得鼠标焦点,响应鼠标操作
 		e鼠标范围,	//鼠标在窗口的范围内
-		e显示,	//如果为假,自已和子窗口都不显示
+		e显示,	//显示当前窗口和子窗口
 		e显示背景,
 		e显示边框,
 		e容器,	//影响窗口的一些交互行为. 如果有子窗口,默认为真
@@ -225,14 +229,15 @@ public:
 	void f计算_平移();
 	void f更新_切换();
 	//动作,由父窗口给子窗口发消息
-	void f动作_添加窗口(W窗口&);	//类的成员子窗口
+	void f动作_添加窗口(W窗口 &, bool 显示 = false);	//类的成员子窗口
 	void f动作_关闭();	//如果要切换窗口,先关闭窗口再新建窗口
-	void f动作_启用(bool = true);
-	void f动作_禁用(bool = true);	//启用的反操作
+	void f动作_启用(bool 启用 = true);	//接收按键操作
+	void f动作_禁用(bool 禁用 = true);	//启用的反操作
 	void f动作_显示(float 延时 = 0);
 	void f动作_隐藏(bool 消失动画 = true);
 	void f动作_获得焦点();
 	void f动作_获得弱焦点();
+	void f动作_释放焦点();	//只有获得焦点的窗口才能调用,重新选择一个可获得焦点的窗口
 	//其它方法
 	static C用户界面 &fg引擎();
 	std::vector<W窗口*> fg子窗口();
@@ -247,7 +252,7 @@ public:
 	void f按键切换计算(const S方向键参数 &);	//m按键切换 必需有值
 	int fg组合标识值() const;
 	//t颜色 fg主题颜色(float, float, float);
-	//由引擎控制的标志状态
+	//由引擎控制的标志状态.一直变化的值叫状态,很少变化或不变的值叫属性
 	bool f状态_i焦点() const;	//窗口是否获得焦点
 	bool f状态_i弱焦点() const;	//有按键焦点没有鼠标焦点
 	bool f状态_i活动() const;	//如果父窗口是活动的，子窗口也是活动的。
@@ -295,9 +300,9 @@ constexpr int f组合标识值(int a标识, int a值) {
 	return a标识 << 16 | a值;
 }
 }	//namespace 用户界面
-//=============================================================================
+//==============================================================================
 namespace std {
 template<> struct hash<用户界面::S文本格式> {
 	size_t operator()(const 用户界面::S文本格式 &) const;
 };
-}
+}	//namespace std

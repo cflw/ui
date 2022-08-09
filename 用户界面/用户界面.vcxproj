@@ -28,26 +28,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -102,6 +102,7 @@
       <AdditionalIncludeDirectories>$(cflw_develop)\cflw代码库;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -125,6 +126,7 @@
       <AdditionalIncludeDirectories>$(cflw_develop)\cflw代码库;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,6 +152,7 @@
       <AdditionalIncludeDirectories>$(cflw_develop)\cflw代码库;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -177,6 +180,7 @@
       <AdditionalIncludeDirectories>$(cflw_develop)\cflw代码库;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -198,10 +202,14 @@
     <ClCompile Include="用户界面_基础.cpp" />
     <ClCompile Include="用户界面_引擎.cpp" />
     <ClCompile Include="用户界面_控件.cpp" />
-    <ClCompile Include="用户界面_控件_图片.cpp" />
-    <ClCompile Include="用户界面_控件_横向选择列表.cpp" />
-    <ClCompile Include="用户界面_控件_表格.cpp" />
-    <ClCompile Include="用户界面_控件_选项卡.cpp" />
+    <ClCompile Include="用户界面_控件.ixx" />
+    <ClCompile Include="用户界面_控件_下拉列表.ixx" />
+    <ClCompile Include="用户界面_控件_图片.ixx" />
+    <ClCompile Include="用户界面_控件_垂直滚动条.ixx" />
+    <ClCompile Include="用户界面_控件_横向选择列表.ixx" />
+    <ClCompile Include="用户界面_控件_表格.ixx" />
+    <ClCompile Include="用户界面_控件_选项卡.ixx" />
+    <ClCompile Include="用户界面_控件常量.ixx" />
     <ClCompile Include="用户界面接口实现_图形d2d.cpp" />
     <ClCompile Include="用户界面接口实现_输入w.cpp" />
     <ClCompile Include="用户界面接口实现_输入x.cpp" />

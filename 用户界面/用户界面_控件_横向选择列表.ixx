@@ -1,8 +1,43 @@
-﻿#include <cflw工具_运算.h>
+﻿module;
+#include <cflw工具_运算.h>
 #include "用户界面_控件.h"
-#include "用户界面_接口.h"
-namespace 用户界面 {
+#include "用户界面_布局.h"
+#include "用户界面_引擎.h"
+export module 用户界面.控件.横向选择列表;
 namespace 工具 = cflw::工具;
+export namespace 用户界面 {
+//==============================================================================
+// 声明
+//==============================================================================
+class W横向选择列表 : public W窗口 {
+public:
+	enum E标识 {
+		e标签框,
+		e左按钮,
+		e右按钮,
+	};
+	class W显示框 : public W窗口, public C控件文本 {
+	public:
+		W显示框(int = -1, int = 0);
+		void f响应_显示(const S显示参数 &) const override;
+		void f响应_方向键(const S方向键参数 &) override;
+	};
+	static constexpr float c边长 = 16;
+	W横向选择列表(int = -1, int = 0);
+	void f事件_按键(W窗口 &, const S按键参数 &) override;
+	void f响应_初始化() override;
+	void f属性_s布局(const S布局参数 &) override;
+	void f左();
+	void f右();
+	void f切换项(int &(*变化)(int &));
+	std::vector<std::wstring> ma文本;
+	W按钮 w左, w右;
+	W显示框 w中;
+	int m选择项 = 0;
+};
+}	//namespace 用户界面
+module : private;
+namespace 用户界面 {
 //==============================================================================
 // 显示框
 //==============================================================================

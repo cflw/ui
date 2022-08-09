@@ -6,9 +6,14 @@
 #include <用户界面接口实现_输入w.h>
 #include <用户界面接口实现_输入x.h>
 #include <用户界面接口实现_音频x.h>
-#include "窗口.h"
 #include "常量.h"
 #include "资源.h"
+#include "头.h"
+import 窗口_主窗口;
+import 窗口_按钮;
+import 窗口_复选框;
+import 窗口_表格;
+import 窗口_选项卡;
 namespace 二维 = cflw::图形::d2d;
 namespace 输入w = cflw::输入::win;
 namespace 输入x = cflw::输入::xi;
@@ -111,10 +116,10 @@ public:
 		m输入w.f初始化(m窗口, c缩放);
 		//m音频.f初始化();
 		//m播放控制.f初始化(m音频);
-		m输入w.f创建键盘(m键盘);
-		m输入w.f创建鼠标(m鼠标);
-		m输入w.f创建触摸(m触摸);
-		m输入x.f创建手柄(m手柄);
+		m键盘 = m输入w.f创建键盘();
+		m鼠标 = m输入w.f创建鼠标();
+		m触摸 = m输入w.f创建触摸();
+		m手柄 = m输入x.f创建手柄();
 		m键盘接口.f初始化(*m键盘);
 		m鼠标接口.f初始化(*m鼠标);
 		m触摸接口.f初始化(*m触摸);
@@ -181,7 +186,7 @@ public:
 		auto v画文本 = m二维.fc画文本();
 		v画图形->fs颜色(t颜色(1, 1, 1, 1));
 		//鼠标十字
-		const t向量2 v鼠标坐标 = {m鼠标->f坐标().x, m鼠标->f坐标().y};
+		const t向量2 v鼠标坐标 = {m鼠标->fg坐标().x, m鼠标->fg坐标().y};
 		v画图形->f绘制线条({v鼠标坐标 + t向量2{16, 0}, v鼠标坐标 + t向量2{-16, 0}});
 		v画图形->f绘制线条({v鼠标坐标 + t向量2{0, 16}, v鼠标坐标 + t向量2{0, -16}});
 		//文本

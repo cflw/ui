@@ -38,16 +38,7 @@
     <ClCompile Include="用户界面_按键切换.cpp">
       <Filter>用户界面</Filter>
     </ClCompile>
-    <ClCompile Include="用户界面_控件_选项卡.cpp">
-      <Filter>控件</Filter>
-    </ClCompile>
-    <ClCompile Include="用户界面_控件_表格.cpp">
-      <Filter>控件</Filter>
-    </ClCompile>
     <ClCompile Include="用户界面_控件.cpp">
-      <Filter>控件</Filter>
-    </ClCompile>
-    <ClCompile Include="用户界面_控件_横向选择列表.cpp">
       <Filter>控件</Filter>
     </ClCompile>
     <ClCompile Include="用户界面接口实现_音频x.cpp">
@@ -56,7 +47,28 @@
     <ClCompile Include="用户界面接口实现_图形d2d.cpp">
       <Filter>接口实现</Filter>
     </ClCompile>
-    <ClCompile Include="用户界面_控件_图片.cpp">
+    <ClCompile Include="用户界面_控件_表格.ixx">
+      <Filter>控件</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_控件_横向选择列表.ixx">
+      <Filter>控件</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_控件_图片.ixx">
+      <Filter>控件</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_控件_选项卡.ixx">
+      <Filter>控件</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_控件_下拉列表.ixx">
+      <Filter>控件</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_控件常量.ixx">
+      <Filter>控件</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_控件_垂直滚动条.ixx">
+      <Filter>控件</Filter>
+    </ClCompile>
+    <ClCompile Include="用户界面_控件.ixx">
       <Filter>控件</Filter>
     </ClCompile>
   </ItemGroup>

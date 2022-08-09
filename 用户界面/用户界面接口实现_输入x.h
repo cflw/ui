@@ -11,4 +11,4 @@ public:
 	输入x::I手柄 *m手柄 = nullptr;
 	输入x::C按键映射 m映射;
 };
-}
+}	//namespace 用户界面::接口实现::xi

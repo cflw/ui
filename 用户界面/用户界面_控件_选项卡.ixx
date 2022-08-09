@@ -1,6 +1,55 @@
-﻿#include "用户界面_控件.h"
+﻿module;
+#include "用户界面_控件.h"
 #include "用户界面_接口.h"
 #include "用户界面_布局.h"
+export module 用户界面.控件.选项卡;
+export namespace 用户界面 {
+//==============================================================================
+// 声明
+//==============================================================================
+class W选项卡组 : public W窗口 {
+public:
+	static constexpr float c页按钮宽 = 50;
+	static constexpr float c页按钮高 = 20;
+	static constexpr float c文本大小 = 16;
+	enum E标识 {
+		e页按钮
+	};
+	enum E标志 {
+		e活动 = W窗口::e自定义,
+	};
+	class W页按钮 : public W按钮 {
+	public:
+		W页按钮(int 值);
+		void f响应_更新() override;
+		void f响应_显示(const S显示参数 &) const override;
+		S渐变插值 m活动渐变;
+	};
+	struct S页 {
+		W窗口 *m窗口;
+		std::unique_ptr<W页按钮> m按钮;
+	};
+	W选项卡组(int = -1, int = 0);
+	void f事件_按键(W窗口 &, const S按键参数 &);
+	void f响应_初始化();
+	void f动作_添加页(W窗口 &页, const std::wstring_view &标签);
+	void f动作_方向切换(bool 方向);
+	void f动作_切换(int 序号);
+	void f属性_s页按钮尺寸(const t向量2 &);
+	void f属性_s页按钮宽(float);
+	void f属性_s页按钮高(float);
+	S布局参数 f属性_g页按钮布局(int 序号) const;
+	void f属性_s文本大小(float);
+	void f重置页按钮布局();
+	void f隐藏页(int 序号);
+	void f显示页(int 序号);
+	std::vector<S页> ma页;
+	int m页序号 = 0;
+	float m文本大小 = c文本大小;
+	t向量2 m页按钮尺寸{c页按钮宽, c页按钮高};
+};
+}	//namespace 用户界面
+module : private;
 namespace 用户界面 {
 //==============================================================================
 // 选项卡页按钮
@@ -20,7 +69,7 @@ void W选项卡组::W页按钮::f响应_显示(const S显示参数 &a) const {
 	const float v切换透明 = fg总切换().fg透明度();
 	const t矩形 &v动画矩形 = fg动画矩形();
 	//前景边框
-	const t颜色 v活动色 = a.m主题.fg颜色(1, 1, (m活动渐变.f插值(0, 0.6f) + m焦点渐变.f插值(0, 0.4f))* v切换透明);
+	const t颜色 v活动色 = a.m主题.fg颜色(1, 1, (m活动渐变.f插值(0, 0.6f) + m焦点渐变.f插值(0, 0.4f)) * v切换透明);
 	if (f标志_i显示边框()) {
 		a.m图形.f绘制矩形(v动画矩形, v活动色);
 	}
@@ -33,7 +82,7 @@ void W选项卡组::W页按钮::f响应_显示(const S显示参数 &a) const {
 //==============================================================================
 // 选项卡组
 //==============================================================================
-W选项卡组::W选项卡组(int a标识, int a值) :
+W选项卡组::W选项卡组(int a标识, int a值):
 	W窗口(a标识, a值) {
 }
 void W选项卡组::f事件_按键(W窗口 &a窗口, const S按键参数 &a参数) {
