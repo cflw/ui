@@ -20,14 +20,14 @@ public:
 	std::unique_ptr<I图片源> f创建图片(const std::wstring_view &) const;
 	void f绘制圆形(const t矩形 &, const t颜色 &) const override;
 	void f绘制矩形(const t矩形 &, const t颜色 &) const override;
-	void f绘制文本(const std::wstring_view &, const t矩形 &, const t颜色 &, const S文本格式 &) const override;
+	void f绘制文本(const std::wstring_view &, const t矩形 &, const t颜色 &, const S文本样式 &) const override;
 	void f填充矩形(const t矩形 &, const t颜色 &) const override;
 	void f填充圆形(const t矩形 &, const t颜色 &) const override;
 	static E文本水平对齐 ft水平对齐(E对齐);
 	static E文本垂直对齐 ft垂直对齐(E对齐);
+	static 二维::S文本格式参数 ft文本格式参数(const S文本样式 &);
 private:
-	IDWriteTextFormat *fg格式(const S文本格式 &) const;
-	二维::S文本格式参数 f文本格式参数(const S文本格式 &) const;
+	IDWriteTextFormat *ft格式(const S文本样式 &) const;	//带缓存
 	二维::C二维 *m二维 = nullptr;
 	std::shared_ptr<二维::C画图形> m画图形;
 	std::shared_ptr<二维::C画图形> m画图片;
@@ -35,4 +35,4 @@ private:
 	二维::C文本工厂 m文本工厂;
 	纹理::C图像工厂 m图像工厂;
 };
-}
+}	//namespace 用户界面::接口实现::d2d

@@ -2,10 +2,10 @@
 #include "用户界面_控件.h"
 #include "用户界面_布局.h"
 #include "用户界面_引擎.h"
+#include "用户界面_接口.h"
 export module 用户界面.控件.图片;
 export namespace 用户界面 {
 //图片
-class I图片源;
 class W图片 : public W窗口 {
 public:
 	W图片(int = -1, int = 0);

@@ -7,27 +7,25 @@ namespace 用户界面 {
 // 控件文本
 //==============================================================================
 const std::wstring C控件文本::c默认文本 = c调试 ? L"(文本)" : L"";
-C控件文本::C控件文本(const std::wstring &a文本, float a字号, E对齐 a对齐):
-	m文本(a文本), m字号(a字号), m对齐(a对齐) {
+C控件文本::C控件文本(const std::wstring &a文本):
+	m文本(a文本) {
+}
+C控件文本::C控件文本(const std::wstring &a文本, const S文本样式 &a样式):
+	m文本(a文本), m样式(a样式) {
 }
 void C控件文本::f属性_s空文本() {
 	m文本.clear();
 }
-void C控件文本::f属性_s文本(const std::wstring_view &a文本, float a字号, E对齐 a对齐) {
-	assert(a字号 > 1);
+void C控件文本::f属性_s文本(const std::wstring_view &a文本, const S文本样式 &a样式) {
+	assert(a样式.m字号 > 1);
 	f属性_s文本内容(a文本);
-	f属性_s文本字号(a字号);
-	f属性_s文本对齐(a对齐);
+	f属性_s文本样式(a样式);
 }
 void C控件文本::f属性_s文本内容(const std::wstring_view &a文本) {
 	m文本 = a文本;
 }
-void C控件文本::f属性_s文本字号(float a字号) {
-	//assert(C中文字号表::f范围内(a字号));
-	m字号 = a字号;
-}
-void C控件文本::f属性_s文本对齐(E对齐 a对齐) {
-	m对齐 = a对齐;
+void C控件文本::f属性_s文本样式(const S文本样式 &a样式) {
+	m样式 = a样式;
 }
 bool C控件文本::f属性_i有文本() const {
 	return !m文本.empty();
@@ -89,7 +87,7 @@ const std::wstring W标签::c默认文本 = c调试 ? L"(标签)" : L"";
 W标签::W标签(int n, int v): W窗口(n, v), C控件文本(c默认文本) {
 }
 void W标签::f响应_显示(const S显示参数 &a) const {
-	a.m图形.f绘制文本(m文本, fg动画矩形(), a.m主题.fg颜色(1, 1, fg总切换().fg透明度() * m透明度), {m字号, m对齐});
+	a.m图形.f绘制文本(m文本, fg动画矩形(), a.m主题.fg颜色(1, 1, fg总切换().fg透明度() * m透明度), m样式);
 }
 void W标签::f属性_s透明度(float a) {
 	m透明度 = a;
@@ -120,7 +118,7 @@ void W按钮::f响应_显示(const S显示参数 &a) const {
 	}
 	//文本
 	if (f属性_i有文本()) {
-		a.m图形.f绘制文本(m文本, v动画矩形, v前景色, {m字号, m对齐});
+		a.m图形.f绘制文本(m文本, v动画矩形, v前景色, m样式);
 	}
 }
 //==============================================================================
@@ -326,7 +324,7 @@ W复选框::W复选框(int id, int v):
 	W按钮(id, v) {
 }
 void W复选框::f响应_初始化() {
-	f属性_s文本(f属性_g字符(), m尺寸.y, e居中);
+	f属性_s文本(f属性_g字符(), {m尺寸.y, e居中});
 }
 void W复选框::f响应_按键(const S按键参数 &a) {
 	switch (a.m按键) {
@@ -336,7 +334,6 @@ void W复选框::f响应_按键(const S按键参数 &a) {
 	default:
 		W按钮::f响应_按键(a);
 		break;
-
 	}
 }
 void W复选框::f响应_鼠标按下(const S按键参数 &a) {

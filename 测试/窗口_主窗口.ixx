@@ -56,15 +56,15 @@ void W主窗口::f响应_初始化() {
 	f动作_添加窗口(w文字, true);
 	//
 	w按钮0.f属性_s布局(v网格布局.f计算生成(0, 0));
-	w按钮0.f属性_s文本(L"按钮0", c按钮字号);
+	w按钮0.f属性_s文本(L"按钮0", {18, 用户界面::E对齐::e居中, true, false, false, false});
 	//w按钮0.f动作_获得焦点();
 	f动作_添加窗口(w按钮0, true);
 	//
 	w按钮1.f属性_s布局(v网格布局.f计算生成(0, 1));
-	w按钮1.f属性_s文本(L"按钮1", c按钮字号);
+	w按钮1.f属性_s文本(L"按钮1", {18, 用户界面::E对齐::e居中, false, true, false, false});
 	f动作_添加窗口(w按钮1, true);
 	//
-	w按钮2.f属性_s文本内容(L"窗口1");
+	w按钮2.f属性_s文本(L"窗口1", {18, 用户界面::E对齐::e居中, false, false, true, false});
 	w按钮2.f属性_s布局(v网格布局.f计算生成(1, 0));
 	f动作_添加窗口(w按钮2, true);
 	//
@@ -99,16 +99,16 @@ void W主窗口::f响应_初始化() {
 void W主窗口::f事件_按键(W窗口 &a窗口, const 用户界面::S按键参数 &a按键) {
 	用户界面::C用户界面 &v用户界面 = fg引擎();
 	if (&a窗口 == this) {
-		w文字.f属性_s文本(L"主窗口" + std::to_wstring((int)a按键.m按键), 26);
+		w文字.f属性_s文本(L"主窗口" + std::to_wstring((int)a按键.m按键), {26});
 	}
 	switch (a按键.m按键) {
 	case 用户界面::E按键::e确定:
 		switch (a窗口.m标识) {
 		case e按钮0:
-			w文字.f属性_s文本(L"123aaaaaaaa", 26);
+			w文字.f属性_s文本(L"123aaaaaaaa", {26});
 			break;
 		case e按钮1:
-			w文字.f属性_s文本(L"aaaaaaaaaaa", 10);
+			w文字.f属性_s文本(L"aaaaaaaaaaa", {10});
 			break;
 		case e按钮2:
 			v用户界面.f切换窗口(C程序::fg窗口(3));

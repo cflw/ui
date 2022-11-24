@@ -20,13 +20,15 @@ public:
 		e滚动条,
 	};
 	struct S列属性 {
-		float m列宽 = c列宽;
+		float m列宽 = c列宽;	//在表格中的宽度占比！
 		float m字号 = c字号;
 		E对齐 m对齐 = c对齐;
-		float m计算列宽 = -1;	//按比例计算得到的宽度
+		float m计算列宽 = -1;	//按比例计算得到的实际宽度
 	};
 	struct S行属性 {
 		float m行高 = c行高;
+		bool m标题行加粗 = true;	//未实现
+		bool m偶数行高亮 = false;	//未实现
 	};
 	class C行流;
 	class W行 : public W空白按钮 {
@@ -40,6 +42,7 @@ public:
 		bool f状态_i标题行() const;	//当前行是否标题行
 		std::wstring &fg列(int);
 		int fg行号() const;
+		int fg列数() const;
 		C行流 f流();
 		bool f焦点转移(bool 前进, bool 强切换);	//当该行是焦点时把焦点转移到其它行
 		std::unique_ptr<W标签[]> ma标签;
@@ -49,12 +52,25 @@ public:
 	class C行流 {
 	public:
 		C行流(W行 &);
-		C行流 &operator <<(const std::wstring_view &);
-		C行流 &operator >>(std::wstring &);
-		W行 *m行 = nullptr;
+		template<typename t> C行流 &operator <<(const t &a) {
+			std::wostringstream s;
+			s << a;
+			f输出(s.view());
+			return *this;
+		}
+		template<typename t> C行流 &operator >>(t &a) {
+			std::wistringstream s{f输入()};
+			s >> a;
+			return *this;
+		}
+		void f输出(const std::wstring_view &);	//<<
+		std::wstring_view f输入(); //>>
+		W行 *mp行 = nullptr;
 		int i = 0;
 	};
 	W表格(int = -1, int = 0);
+	void f初始化_列(const S列属性 *, size_t 列数);
+	void f初始化_行(const S行属性 &, size_t 最大行数);
 	void f初始化_列数(int);	//必需
 	void f初始化_行数(int);	//可选
 	void f事件_按键(W窗口 &, const S按键参数 &) override;
@@ -66,17 +82,20 @@ public:
 	void f响应_显示(const S显示参数 &) const override;
 	void f响应_垂直平移(const S平移参数 &) override;
 	S列属性 &f属性_g列属性(int 索引);
-	S行属性 f属性_g行属性();
+	S行属性 &f属性_g行属性();
 	int f属性_g列数() const;	//列数
 	int f属性_g行上限() const;	//行上限
 	int f属性_g行数() const;	//当前行数
-	void f属性_s标题行(bool);	//把首行当做标题行
+	void f属性_s标题行(bool);	//把首行当做标题行,需要手动创建首行
 	bool f属性_i标题行() const;	//表格是否设置了标题标志
 	bool f属性_i滚动条() const;	//当行数大于表格高度会显示滚动条
 	W行 &f新行();
+	W行 &f新行(int 标识, int 值);
+	W行 &fg标题行();	//总是返回首行,没有则自动创建
 	void f删除行(int = -1);
 	void f删除行(W行 &);
-	W行 &fg行(int 索引);
+	void f清空行();	//清空除标题行以外的所有行
+	W行 &fg行(int 索引);	//如果设置了标题行,0行就是标题行
 	void f重置滚动条布局();
 	void f重置滚动条值();
 	void f计算滚动();
@@ -89,7 +108,7 @@ public:
 	W行 *m焦点行 = nullptr;
 	t矩形 m焦点动画矩形;
 	int m焦点行号 = -1;
-	int m行值 = 0;
+	int m行值 = 0;	//自动给 W行::m值 赋值,自动递增
 	bool m重置行号 = true;
 };
 }	//namespace 用户界面
@@ -153,6 +172,9 @@ std::wstring &W表格::W行::fg列(int a列) {
 int W表格::W行::fg行号() const {
 	return m行号;
 }
+int W表格::W行::fg列数() const {
+	return mp表格->m列数;
+}
 W表格::C行流 W表格::W行::f流() {
 	return C行流(*this);
 }
@@ -175,15 +197,15 @@ bool W表格::W行::f焦点转移(bool a前进, bool a强切换) {
 // 行流
 //==============================================================================
 W表格::C行流::C行流(W表格::W行 &a行):
-	m行(&a行) {
+	mp行(&a行) {
 }
-W表格::C行流 &W表格::C行流::operator <<(const std::wstring_view &a) {
-	m行->fg列(i++) = a;
-	return *this;
+void W表格::C行流::f输出(const std::wstring_view &a) {
+	assert(i < mp行->fg列数());
+	mp行->fg列(i++) = a;
 }
-W表格::C行流 &W表格::C行流::operator >>(std::wstring &a) {
-	a = m行->fg列(i++);
-	return *this;
+std::wstring_view W表格::C行流::f输入() {
+	assert(i < mp行->fg列数());
+	return mp行->fg列(i++);
 }
 //==============================================================================
 // 表格
@@ -192,6 +214,14 @@ W表格::W表格(int a标识, int a值):
 	W窗口(a标识, a值),
 	w垂直滚动条(a标识, -1) {
 	m标志[e禁用] = true;
+}
+void W表格::f初始化_列(const S列属性 *p, size_t n) {
+	f初始化_列数((int)n);
+	std::copy_n(p, n, ma列属性.begin());
+}
+void W表格::f初始化_行(const S行属性 &p, size_t n) {
+	f初始化_行数((int)n);
+	m行属性 = p;
 }
 void W表格::f初始化_列数(int a列数) {
 	m列数 = a列数;
@@ -290,7 +320,7 @@ void W表格::f响应_垂直平移(const S平移参数 &a) {
 W表格::S列属性 &W表格::f属性_g列属性(int a索引) {
 	return ma列属性[a索引];
 }
-W表格::S行属性 W表格::f属性_g行属性() {
+W表格::S行属性 &W表格::f属性_g行属性() {
 	return m行属性;
 }
 int W表格::f属性_g列数() const {
@@ -315,20 +345,30 @@ bool W表格::f属性_i滚动条() const {
 	return m标志[e滚动条];
 }
 W表格::W行 &W表格::f新行() {
+	return f新行(m标识, m行值++);
+}
+W表格::W行 &W表格::f新行(int a标识, int a值) {
 	//if (m行上限 != c无限行 && f属性_g行数() >= m行上限) {
 	//	return;
 	//}
-	auto &vp行 = ma行.emplace_back(std::make_unique<W行>(*this, m标识, ++m行值));
+	auto &vp行 = ma行.emplace_back(std::make_unique<W行>(*this, a标识, a值));
 	if (m标志[e使用]) {
 		vp行->m行号 = f属性_g行数() - 1;
 		vp行->f属性_s布局();
 		f动作_添加窗口(*vp行, true);
 		if (m标志[e标题行] && vp行->m行号 == 0) {
-			vp行->f动作_禁用();	//首行是禁用的
+			vp行->f动作_禁用();	//标题行是禁用的
 		}
 		f重置滚动条值();
 	}
 	return *vp行;
+}
+W表格::W行 &W表格::fg标题行() {
+	if (f属性_g行数() > 0) {	//有行,用首行
+		return *ma行[0];
+	} else {	//没有行,新建行
+		return f新行();
+	}
 }
 void W表格::f删除行(int a行号) {
 	if (ma行.empty()) {
@@ -373,6 +413,23 @@ void W表格::f删除行(int a行号) {
 }
 void W表格::f删除行(W行 &a行) {
 	f删除行(a行.fg行号());
+}
+void W表格::f清空行() {
+	const int v行数 = f属性_g行数();
+	const int v开始行 = f属性_i标题行() ? 1 : 0;
+	for (int i = v开始行; i < v行数; ++i) {
+		auto vp行 = ma行.begin() + i;
+		W行 &v行 = **vp行;
+		v行.f动作_关闭();
+		ma删除行.push_back(std::move(*vp行));
+	}
+	if (v行数 < v开始行) {	//发生删除,重新计算状态
+		ma行.resize(v开始行);
+		m重置行号 = true;
+		if (m标志[e使用]) {
+			f重置滚动条值();
+		}
+	}
 }
 W表格::W行 &W表格::fg行(int a索引) {
 	return *ma行[a索引];

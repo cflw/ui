@@ -8,19 +8,17 @@ namespace 用户界面 {
 class C控件文本 {
 public:
 	static const std::wstring c默认文本;
-	static constexpr float c字号 = 10;
 	C控件文本() = default;
-	C控件文本(const std::wstring &, float 字号 = c字号, E对齐 对齐 = e居中);
+	C控件文本(const std::wstring &);
+	C控件文本(const std::wstring &, const S文本样式 &);
 	void f属性_s空文本();
-	void f属性_s文本(const std::wstring_view &文本, float 字号 = c字号, E对齐 对齐 = e居中);
+	void f属性_s文本(const std::wstring_view &文本, const S文本样式 &);
 	void f属性_s文本内容(const std::wstring_view &);
-	void f属性_s文本字号(float);
-	void f属性_s文本对齐(E对齐);
+	void f属性_s文本样式(const S文本样式 &);
 	bool f属性_i有文本() const;
 public:
 	std::wstring m文本 = c默认文本;
-	float m字号 = c字号;
-	E对齐 m对齐 = e居左;
+	S文本样式 m样式 = {};
 };
 //专门的窗口容器类,会响应所有鼠标消息(窗口基类只响应部分消息)
 class W窗口框架 : public W窗口 {

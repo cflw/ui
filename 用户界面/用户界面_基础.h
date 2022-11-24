@@ -49,12 +49,17 @@ enum class E时间点 {
 //==============================================================================
 // 基础类/结构
 //==============================================================================
-struct S文本格式 {
-	float m字号 = 10;
-	E对齐 m水平对齐 = E对齐::e居中;
-	bool operator ==(const S文本格式 &a) const {
-		return m字号 == a.m字号 && m水平对齐 == a.m水平对齐;
-	}
+struct S文本样式 {
+	static const S文本样式 c默认样式;
+	static constexpr float c字号 = 10;	//默认字号
+	static constexpr E对齐 c对齐 = E对齐::e居中;	//默认对齐
+	float m字号 = c字号;
+	E对齐 m水平对齐 = c对齐;
+	bool m粗体 = false;
+	bool m斜体 = false;
+	bool m下划线 = false;
+	bool m删除线 = false;
+	auto operator <=>(const S文本样式 &a) const = default;
 };
 struct S主题 {
 	static const S主题 c白;
@@ -302,7 +307,7 @@ constexpr int f组合标识值(int a标识, int a值) {
 }	//namespace 用户界面
 //==============================================================================
 namespace std {
-template<> struct hash<用户界面::S文本格式> {
-	size_t operator()(const 用户界面::S文本格式 &) const;
+template<> struct hash<用户界面::S文本样式> {
+	size_t operator()(const 用户界面::S文本样式 &) const;
 };
 }	//namespace std

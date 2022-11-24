@@ -13,7 +13,7 @@ public:
 	//画
 	virtual void f绘制圆形(const t矩形 &, const t颜色 &) const = 0;
 	virtual void f绘制矩形(const t矩形 &, const t颜色 &) const = 0;
-	virtual void f绘制文本(const std::wstring_view &, const t矩形 &, const t颜色 &, const S文本格式 &) const = 0;
+	virtual void f绘制文本(const std::wstring_view &, const t矩形 &, const t颜色 &, const S文本样式 &) const = 0;
 	virtual void f填充矩形(const t矩形 &, const t颜色 &) const = 0;
 	virtual void f填充圆形(const t矩形 &, const t颜色 &) const = 0;
 };

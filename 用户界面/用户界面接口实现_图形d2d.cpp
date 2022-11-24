@@ -42,8 +42,8 @@ void C图形::f绘制矩形(const t矩形 &a矩形, const t颜色 &a颜色) cons
 	m画图形->fs颜色(a颜色);
 	m画图形->f绘制矩形({a矩形.m坐标, a矩形.m半尺寸});
 }
-void C图形::f绘制文本(const std::wstring_view &a文本, const t矩形 &a矩形, const t颜色 &a颜色, const S文本格式 &a格式) const {
-	m画文本->fs格式(fg格式(a格式));
+void C图形::f绘制文本(const std::wstring_view &a文本, const t矩形 &a矩形, const t颜色 &a颜色, const S文本样式 &a格式) const {
+	m画文本->fs格式(ft格式(a格式));
 	m画文本->fs颜色(a颜色);
 	m画文本->fs区域(a矩形);
 	m画文本->f绘制文本(a文本);
@@ -56,25 +56,27 @@ void C图形::f填充圆形(const t矩形 &a矩形, const t颜色 &a颜色) cons
 	m画图形->fs颜色(a颜色);
 	m画图形->f填充椭圆({a矩形.m坐标, a矩形.m半尺寸});
 }
-IDWriteTextFormat *C图形::fg格式(const S文本格式 &a) const {
-	static std::unordered_map<S文本格式, 二维::tp文本格式> va文本格式;
+IDWriteTextFormat *C图形::ft格式(const S文本样式 &a) const {
+	static std::unordered_map<S文本样式, 二维::tp文本格式> va文本格式;
 	if (va文本格式.find(a) == va文本格式.end()) {
 		二维::tp文本格式 v格式;
-		v格式 = m文本工厂.fc文本格式(f文本格式参数(a));
+		v格式 = m文本工厂.fc文本格式(ft文本格式参数(a));
 		va文本格式.emplace(a, v格式);
 		return v格式.Get();
 	} else {
 		return va文本格式.at(a).Get();
 	}
 }
-二维::S文本格式参数 C图形::f文本格式参数(const S文本格式 &a) const {
+二维::S文本格式参数 C图形::ft文本格式参数(const S文本样式 &a) {
 	二维::S文本格式参数 v参数;
 	v参数.fs字号(a.m字号);
 	v参数.fs水平对齐(ft水平对齐(a.m水平对齐));
+	v参数.fs粗体(a.m粗体);
+	v参数.fs斜体(a.m斜体);
 	return v参数;
 }
 E文本水平对齐 C图形::ft水平对齐(E对齐 a) {
-	static const std::unordered_map<E对齐, E文本水平对齐> ca表 = {
+	static const std::map<E对齐, E文本水平对齐> ca表 = {
 		{E对齐::e居左, E文本水平对齐::e左},
 		{E对齐::e居右, E文本水平对齐::e右},
 		{E对齐::e居中, E文本水平对齐::e中},
@@ -84,7 +86,7 @@ E文本水平对齐 C图形::ft水平对齐(E对齐 a) {
 	return ca表.at(a);
 }
 E文本垂直对齐 C图形::ft垂直对齐(E对齐 a) {
-	static const std::unordered_map<E对齐, E文本垂直对齐> ca表 = {
+	static const std::map<E对齐, E文本垂直对齐> ca表 = {
 		{E对齐::e居左, E文本垂直对齐::e上},
 		{E对齐::e居右, E文本垂直对齐::e下},
 		{E对齐::e居中, E文本垂直对齐::e中},
@@ -93,6 +95,4 @@ E文本垂直对齐 C图形::ft垂直对齐(E对齐 a) {
 	};
 	return ca表.at(a);
 }
-
-}
-
+}	//namespace 用户界面::接口实现::d2d
