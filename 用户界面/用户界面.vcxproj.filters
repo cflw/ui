@@ -71,6 +71,9 @@
     <ClCompile Include="用户界面_控件.ixx">
       <Filter>控件</Filter>
     </ClCompile>
+    <ClCompile Include="用户界面_窗口.cpp">
+      <Filter>用户界面</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="用户界面.h">
@@ -108,6 +111,9 @@
     </ClInclude>
     <ClInclude Include="用户界面接口实现_图形d2d.h">
       <Filter>接口实现</Filter>
+    </ClInclude>
+    <ClInclude Include="用户界面_窗口.h">
+      <Filter>用户界面</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

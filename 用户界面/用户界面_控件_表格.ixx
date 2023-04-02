@@ -300,7 +300,7 @@ void W表格::f响应_更新() {
 			m焦点动画矩形 = m焦点窗口->fg动画矩形();
 		} else {
 			const t向量2 v坐标 = m焦点窗口->fg动画坐标();
-			const float v过秒 = fg引擎().fg渲染秒();
+			const float v过秒 = C用户界面::fg实例().fg渲染秒();
 			m焦点动画矩形.m坐标 = m焦点动画矩形.m坐标.f倍数渐变(v坐标, 20 * v过秒);
 		}
 	}
@@ -453,7 +453,7 @@ void W表格::f计算滚动() {
 	const bool vi标题行 = f属性_i标题行();
 	const float v半尺寸y = m尺寸.y * 0.5f;
 	const int v滚动位置 = w垂直滚动条.f属性_g当前位置();
-	const float v过秒 = fg引擎().fg计算秒();
+	const float v过秒 = C用户界面::fg实例().fg计算秒();
 	for (auto &vp行 : ma行) {
 		const float v上 = v半尺寸y - v行高 * vp行->m行号;	//相对表格位置
 		const float v下 = v上 - v行高;

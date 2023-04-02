@@ -21,6 +21,7 @@ public:
 public:
 	C用户界面();
 	~C用户界面();
+	static C用户界面 &fg实例();	//单例
 	void f初始化();
 	void fs图形(I图形设备 &);
 	void fs时钟频率(float 计算秒, float 渲染秒);	//影响时间的计算

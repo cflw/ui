@@ -1,6 +1,7 @@
 ﻿#include "用户界面_按键切换.h"
 #include <cflw工具_运算.h>
 #include "用户界面_基础.h"
+#include "用户界面_窗口.h"
 namespace 用户界面 {
 I按键切换::I按键切换(C用户界面 &a引擎, W窗口 &a窗口):
 	m引擎(&a引擎), m窗口(&a窗口) {

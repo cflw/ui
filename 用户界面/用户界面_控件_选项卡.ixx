@@ -27,7 +27,7 @@ public:
 		S渐变插值 m活动渐变;
 	};
 	struct S页 {
-		W窗口 *m窗口;
+		W窗口 *m窗口 = nullptr;
 		std::unique_ptr<W页按钮> m按钮;
 	};
 	W选项卡组(int = -1, int = 0);

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "用户界面_头.h"
 #include "用户界面_基础.h"
+#include "用户界面_窗口.h"
 namespace 用户界面 {
 //==============================================================================
 // 控件基类
@@ -8,7 +9,7 @@ namespace 用户界面 {
 class C控件文本 {
 public:
 	static const std::wstring c默认文本;
-	C控件文本() = default;
+	C控件文本();
 	C控件文本(const std::wstring &);
 	C控件文本(const std::wstring &, const S文本样式 &);
 	void f属性_s空文本();
@@ -16,8 +17,10 @@ public:
 	void f属性_s文本内容(const std::wstring_view &);
 	void f属性_s文本样式(const S文本样式 &);
 	bool f属性_i有文本() const;
+	const std::wstring &fg文本() const;
+	const S文本样式 &fg文本样式() const;
 public:
-	std::wstring m文本 = c默认文本;
+	std::wstring m文本;	//本地存储的文本
 	S文本样式 m样式 = {};
 };
 //专门的窗口容器类,会响应所有鼠标消息(窗口基类只响应部分消息)

@@ -210,6 +210,7 @@
     <ClCompile Include="用户界面_控件_表格.ixx" />
     <ClCompile Include="用户界面_控件_选项卡.ixx" />
     <ClCompile Include="用户界面_控件常量.ixx" />
+    <ClCompile Include="用户界面_窗口.cpp" />
     <ClCompile Include="用户界面接口实现_图形d2d.cpp" />
     <ClCompile Include="用户界面接口实现_输入w.cpp" />
     <ClCompile Include="用户界面接口实现_输入x.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="用户界面_接口.h" />
     <ClInclude Include="用户界面_控件.h" />
     <ClInclude Include="用户界面_按键切换.h" />
+    <ClInclude Include="用户界面_窗口.h" />
     <ClInclude Include="用户界面接口实现_图形d2d.h" />
     <ClInclude Include="用户界面接口实现_输入w.h" />
     <ClInclude Include="用户界面接口实现_输入x.h" />

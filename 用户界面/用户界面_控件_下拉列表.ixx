@@ -27,6 +27,8 @@ public:
 	bool f响应_i范围内(const t向量2 &) override;
 	void f响应_方向键(const S方向键参数 &) override;
 	void f属性_s列表(const std::vector<std::wstring> &);
+	void f属性_s选择(int);	//改变下拉列表的选择项
+	void f属性_s选择0(int);	//不检查,直接改变,不会触发事件
 	std::vector<std::wstring> &f属性_g列表();
 	const std::vector<std::wstring> &f属性_g列表() const;
 	t标志::reference fi下拉();
@@ -41,7 +43,7 @@ public:
 	W按钮 w中心按钮{e中心按钮};
 	W标签 w标签;
 	int m选择项 = 0;
-	int m焦点项 = -1;
+	int m焦点项 = -1;	//只在下拉时有效
 };
 }	//namespace 用户界面
 module : private;
@@ -81,14 +83,12 @@ void W下拉列表::f响应_初始化() {
 	w中心按钮.f属性_s文本(f属性_g选中文本(), c选项文本样式);
 	w中心按钮.f属性_s布局({t向量2::c零, m尺寸});
 	w中心按钮.f标志_s继承显示();
-	w中心按钮.f动作_显示();
-	f动作_添加窗口(w中心按钮);
+	f动作_添加窗口(w中心按钮, true);
 	w标签.f属性_s文本(c向下空三角, c下拉按钮文本样式);
 	w标签.f属性_s布局({t向量2::c零, m尺寸 + t向量2(-4, 0)});
 	w标签.f属性_s透明度(0.5f);
 	w标签.f标志_s继承显示();
-	w标签.f动作_显示();
-	f动作_添加窗口(w标签);
+	f动作_添加窗口(w标签, true);
 }
 bool W下拉列表::f响应_i范围内(const t向量2 &a坐标) {
 	return m标志[e下拉];
@@ -103,6 +103,16 @@ void W下拉列表::f响应_方向键(const S方向键参数 &a方向键) {
 void W下拉列表::f属性_s列表(const std::vector<std::wstring> &a列表) {
 	ma文本 = a列表;
 	m标志[e更新列表] = false;
+}
+void W下拉列表::f属性_s选择(int a选择) {
+	if (a选择 != m选择项) {
+		m父窗口->f事件_窗口值变化(*this, m选择项, a选择);
+		f属性_s选择0(a选择);
+	}
+}
+void W下拉列表::f属性_s选择0(int a选择) {
+	m选择项 = a选择;
+	w中心按钮.f属性_s文本内容(f属性_g选中文本());
 }
 std::vector<std::wstring> &W下拉列表::f属性_g列表() {
 	m标志[e更新列表] = false;
@@ -154,12 +164,12 @@ void W下拉列表::f开始下拉() {
 	//添加
 	float v延迟 = 0;
 	for (auto &v按钮 : ma下拉按钮) {
-		v按钮.f动作_显示(v延迟);
 		f动作_添加窗口(v按钮);
+		v按钮.f动作_显示(v延迟);
 		v延迟 += 0.25f;
 	}
 	//进入
-	C用户界面 &v用户界面 = fg引擎();
+	C用户界面 &v用户界面 = C用户界面::fg实例();
 	v用户界面.f设置活动窗口(*this);
 	m焦点项 = m选择项;
 	w标签.f属性_s文本内容(c向上空三角);
@@ -168,15 +178,11 @@ void W下拉列表::f开始下拉() {
 void W下拉列表::f结束下拉() {
 	auto v下拉 = fi下拉();
 	assert(v下拉);
-	if (m焦点项 != m选择项) {
-		m父窗口->f事件_窗口值变化(*this, m选择项, m焦点项);
-		m选择项 = m焦点项;
-		w中心按钮.f属性_s文本内容(f属性_g选中文本());
-	}
+	f属性_s选择(m焦点项);
 	for (auto &v按钮 : ma下拉按钮) {
 		v按钮.f动作_关闭();
 	}
-	C用户界面 &v用户界面 = fg引擎();
+	C用户界面 &v用户界面 = C用户界面::fg实例();
 	v用户界面.f清除活动窗口();
 	w标签.f属性_s文本内容(c向下空三角);
 	v下拉 = false;
